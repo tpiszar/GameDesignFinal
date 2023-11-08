@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.AI;
 
 public class FlyingEnemy : MonoBehaviour
@@ -19,7 +20,13 @@ public class FlyingEnemy : MonoBehaviour
     bool returning = false;
     public float closeEnough;
 
+    bool knocked;
+    Rigidbody rig;
+
     public int attkDmg;
+
+    public Slider healthBar;
+    public Canvas canvas;
 
     // Start is called before the first frame update
 
@@ -31,17 +38,30 @@ public class FlyingEnemy : MonoBehaviour
         baseSpeed = agent.speed;
         baseAccel = agent.acceleration;
         baseAng = agent.angularSpeed;
+        rig = GetComponent<Rigidbody>();
 
+        healthBar.maxValue = health;
+        healthBar.value = health;
+        canvas.enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (knocked)
         {
-            print(attack + " " + returning + " " + agent.isStopped);
+            if (rig.velocity.magnitude < 0.001f)
+            {
+                agent.enabled = true;
+                agent.acceleration = baseAng;
+                agent.angularSpeed = baseAng;
+                agent.speed = baseSpeed;
+                agent.updateRotation = true;
+                knocked = false;
+                nextAttk = 0;
+            }
         }
-        if (attack)
+        else if (attack)
         {
             agent.SetDestination(player.transform.position);
         }
@@ -97,5 +117,32 @@ public class FlyingEnemy : MonoBehaviour
 
             player.GetComponent<PlayerHealth>().TakeDamage(attkDmg);
         }
+    }
+
+    public int health = 50;
+
+    public void TakeDamage(int amount)
+    {
+        health -= amount;
+        canvas.enabled = true;
+        healthBar.value = health;
+        if (health <= 0)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
+    public void knockBack(float impact, Transform attacker)
+    {
+        agent.enabled = false;
+        Vector3 dir = transform.position - attacker.transform.position;
+        dir.y = 0;
+        dir.Normalize();
+        dir *= impact;
+        rig.AddForce(dir, ForceMode.Impulse);
+        rig.angularVelocity = Vector3.zero;
+        attack = false;
+        returning = false;
+        knocked = true;
     }
 }

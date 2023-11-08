@@ -23,27 +23,63 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        //if (shotBy == shooter.player)
+        //{
+        //    GroundEnemy enemy = collision.gameObject.GetComponentInParent<GroundEnemy>();
+        //    if (enemy)
+        //    {
+        //        enemy.TakeDamage(damage);
+        //    }
+        //}
+        //else
+        //{
+        //    PlayerHealth player = collision.gameObject.GetComponent<PlayerHealth>();
+        //    if (player)
+        //    {
+        //        player.TakeDamage(damage);
+        //    }
+        //}
+        //Destroy(this.gameObject);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
         if (shotBy == shooter.player)
         {
-            GroundEnemy enemy = collision.gameObject.GetComponentInParent<GroundEnemy>();
-            if (enemy)
+            GroundEnemy GrEn = other.gameObject.GetComponentInParent<GroundEnemy>();
+            if (GrEn)
             {
-                enemy.TakeDamage(damage);
+                GrEn.TakeDamage(damage);
+            }
+            else
+            {
+                FlyingEnemy FlyEn = other.gameObject.GetComponentInParent<FlyingEnemy>();
+                if (FlyEn)
+                {
+                    FlyEn.TakeDamage(damage);
+                }
+            }
+            if (other.gameObject.layer != 3)
+            {
+                Destroy(this.gameObject);
             }
         }
         else
         {
-            PlayerHealth player = collision.gameObject.GetComponent<PlayerHealth>();
+            PlayerHealth player = other.gameObject.GetComponent<PlayerHealth>();
             if (player)
             {
                 player.TakeDamage(damage);
             }
+            if (other.gameObject.layer != 6)
+            {
+                Destroy(this.gameObject);
+            }
         }
-        Destroy(this.gameObject);
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.AI;
 
 public class GroundEnemy : MonoBehaviour
@@ -19,14 +20,19 @@ public class GroundEnemy : MonoBehaviour
     public float detectDistance;
     public float minShoot;
     public float shootDistance;
+
+    Rigidbody rig;
+
+    public Slider healthBar;
+    public Canvas canvas;
+
     public enum state
     {
-        idle,
+        knockedBack,
         following,
         shooting
     }
-    state currentState = state.idle;
-    public float idleTime;
+    state currentState = state.following;
     float nextMove;
     public float patrolRange;
 
@@ -45,6 +51,11 @@ public class GroundEnemy : MonoBehaviour
         currentState = state.following;
         agent.updateRotation = false;
         target = Spawner.player;
+        rig = GetComponentInChildren<Rigidbody>();
+
+        healthBar.maxValue = health;
+        healthBar.value = health;
+        canvas.enabled = false;
     }
 
     // Update is called once per frame
@@ -72,42 +83,24 @@ public class GroundEnemy : MonoBehaviour
 
         switch (currentState)
         {
-            case state.idle:
-                Idle();
-                //print("Idle " + Vector3.Distance(transform.position, target.position) + " " + agent.hasPath);
+            case state.knockedBack:
+                Knocked();
                 break;
             case state.following:
                 Following();
-                //print("Following " + Vector3.Distance(transform.position, target.position) + " " + agent.hasPath);
                 break;
             case state.shooting:
                 Shooting();
-                //print("Shooting " + Vector3.Distance(transform.position, target.position) + " " + agent.hasPath);
                 break;
         }
     }
 
-    void Idle()
+    void Knocked()
     {
-        if (Vector3.Distance(transform.position, target.position) < startDetect)
+        if (rig.velocity.magnitude < 0.001f)
         {
-            currentState = state.shooting;
-        }
-        else
-        {
-            if (!agent.hasPath || Vector3.Distance(agent.destination, transform.position) < 1)
-            {
-                if (nextMove > idleTime)
-                {
-                    agent.SetDestination(this.transform.position + 
-                        new Vector3(Random.Range(-patrolRange, patrolRange), 0, Random.Range(-patrolRange, patrolRange)));
-                    nextMove = 0;
-                }
-                else
-                {
-                    nextMove += Time.deltaTime;
-                }
-            }
+            agent.enabled = true;
+            currentState = state.following;
         }
     }
 
@@ -181,9 +174,6 @@ public class GroundEnemy : MonoBehaviour
 
         Vector3 bodyLookPoint = target.position;
         bodyLookPoint.y = body.position.y;
-        //head.LookAt(target.position);
-        //body.LookAt(bodyLookPoint);
-        //gun.LookAt(target.position);
 
         Vector3 bodyDir = bodyLookPoint - body.position;
         //Vector3 headDir = target.position - head.position;
@@ -191,7 +181,6 @@ public class GroundEnemy : MonoBehaviour
 
         Quaternion bodyRot = Quaternion.LookRotation(bodyDir.normalized);
         body.rotation = Quaternion.Slerp(body.rotation, bodyRot, rotationSpeed * Time.deltaTime);
-        //head.rotation = Quaternion.Slerp(head.rotation, Quaternion.LookRotation(headDir.normalized), rotationSpeed * Time.deltaTime);
 
         if (Mathf.Abs(body.rotation.eulerAngles.magnitude - bodyRot.eulerAngles.magnitude) < gunRotMag)
         {
@@ -207,10 +196,6 @@ public class GroundEnemy : MonoBehaviour
         Vector3 gunRot = gun.localEulerAngles;
         gunRot.z = 0;
         gun.localEulerAngles = gunRot;
-        //Vector3 headRot = head.localEulerAngles;
-        //headRot.y = 0;
-        //headRot.z = 0;
-        //head.localEulerAngles = headRot;
     }
 
     void Shoot()
@@ -230,13 +215,23 @@ public class GroundEnemy : MonoBehaviour
     public void TakeDamage(int amount)
     {
         health -= amount;
-        if (currentState == state.idle)
-        {
-            currentState = state.shooting;
-        }
+        canvas.enabled = true;
+        healthBar.value = health;
         if (health <= 0)
         {
             Destroy(this.gameObject);
         }
+    }
+
+    public void knockBack(float impact, Transform attacker)
+    {
+        agent.enabled = false;
+        Vector3 dir = transform.position - attacker.transform.position;
+        dir.y = 0;
+        dir.Normalize();
+        dir *= impact;
+        rig.AddForce(dir, ForceMode.Impulse);
+        rig.angularVelocity = Vector3.zero;
+        currentState = state.knockedBack;
     }
 }
