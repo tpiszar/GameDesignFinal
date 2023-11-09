@@ -136,9 +136,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc9a94bf1eee34c418dab561bffe6efe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
   healthBar: {fileID: 3465450970453335247}
   canvas: {fileID: 660003758873807229}
+  healthMin: 40
+  healthMax: 90
+  resourceMin: 1
+  resourceMax: 5
 --- !u!1 &5491081058690407370
 GameObject:
   m_ObjectHideFlags: 0
