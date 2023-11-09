@@ -22,6 +22,9 @@ public class GenerateLevel : MonoBehaviour
     public float spawnRadius;
     public GameObject player;
 
+    public MeshRenderer[] ground;
+    public Material[] groundMats;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,6 +45,12 @@ public class GenerateLevel : MonoBehaviour
         Vector3 finalPosition = hit.position;
 
         player.transform.position = finalPosition;
+
+        Material mat = groundMats[Random.Range(0, groundMats.Length)];
+        for (int i = 0; i < ground.Length; i++)
+        {
+            ground[i].material = mat;
+        }
     }
 
     // Update is called once per frame

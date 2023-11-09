@@ -34,4 +34,9 @@ public class UIScript : MonoBehaviour
     {
         SceneManager.LoadScene(scene);
     }
+
+    public void Restart()
+    {
+        Player.ResourceCount = 0;
+    }
 }

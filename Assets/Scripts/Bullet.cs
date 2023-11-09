@@ -64,7 +64,7 @@ public class Bullet : MonoBehaviour
                     FlyEn.TakeDamage(damage);
                 }
             }
-            if (other.gameObject.layer != 3)
+            if (other.gameObject.layer != 3 && other.gameObject.layer != 7)
             {
                 Destroy(this.gameObject);
             }
@@ -76,7 +76,7 @@ public class Bullet : MonoBehaviour
             {
                 player.TakeDamage(damage);
             }
-            if (other.gameObject.layer != 6)
+            if (other.gameObject.layer != 6 && other.gameObject.layer != 7)
             {
                 Destroy(this.gameObject);
             }

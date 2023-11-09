@@ -44,6 +44,7 @@ public class PlayerHealth : MonoBehaviour
             healthBar.value = health;
             if (health <= 0)
             {
+                GetComponentInParent<Player>().Dead();
                 Destroy(gameObject);
             }
             StartCoroutine(dmgFlash());
