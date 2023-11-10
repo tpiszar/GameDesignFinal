@@ -7219,7 +7219,7 @@ MonoBehaviour:
   groundPoints: 3
   pointIncr: 1
   waveDelay: 5
-  upperWave: 15
+  upperWave: 20
   lowerWave: 25
   enemies:
   - {fileID: 4400288417951692457, guid: 7f0eca7bcb33f6d4abb8dab5e454578f, type: 3}
@@ -7237,8 +7237,8 @@ MonoBehaviour:
   spdCap: 10
   healthCap: 10
   dmgCap: 8
-  spawnPointsPerc: 0.1
-  waveUpDelPerc: 0.03
+  spawnPointsPerc: 0.05
+  waveUpDelPerc: 0.06
   waveDownDelPerc: 0.06
   pointIncrPerc: 0.167
   spawnPointsCap: 10
