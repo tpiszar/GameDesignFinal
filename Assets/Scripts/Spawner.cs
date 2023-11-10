@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Spawner : MonoBehaviour
 {
@@ -22,10 +24,17 @@ public class Spawner : MonoBehaviour
     public GameObject[] enemies;
 
     public float incursionTime;
-    float timer = 0;
+    public float incursionRamp;
     bool incursion = false;
     float incursionDelay = 3;
     float nextInc = 0;
+
+    public GameObject portal;
+    public GameObject endCam;
+    public GameObject mainUI;
+    public GameObject victUI;
+
+    public TextMeshProUGUI timerTxt;
 
     //int curType;
     //Vector3 selSpawn;
@@ -63,12 +72,33 @@ public class Spawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
-        if (timer > incursionTime)
+        if (!incursion)
         {
-            incursion = true;
-        }
+            incursionTime -= Time.deltaTime;
+            float minutes = Mathf.FloorToInt(incursionTime / 60);
+            float seconds = Mathf.FloorToInt(incursionTime % 60);
+            if (seconds < 10)
+            {
+                timerTxt.text = minutes + ":0" + seconds;
+            }
+            else
+            {
+                timerTxt.text = minutes + ":" + seconds;
+            }
 
+            if (incursionTime < 0)
+            {
+                incursion = true;
+                nextWave = 0;
+                GameObject port = Instantiate(portal, new Vector3(0, 2, 0), Quaternion.identity);
+                port.transform.Rotate(new Vector3(-90, 0, 0));
+                Portal portScr = port.GetComponent<Portal>();
+                portScr.endCam = endCam;
+                portScr.mainUI = mainUI;
+                portScr.victUI = victUI;
+                timerTxt.text = "Portal Opened. Incursion Inbound!";
+            }
+        }
         nextWave += Time.deltaTime;
         //if (wave < maxWaves && nextWave > waves[wave].startDelay)
         //{
@@ -98,7 +128,7 @@ public class Spawner : MonoBehaviour
         //}
         if (incursion)
         {
-            if (nextWave > waveDelay && incursionDelay > 1)
+            if (nextWave > incursionRamp && incursionDelay > 1)
             {
                 nextWave = 0;
                 waveDelay = Random.Range(lowerWave, upperWave + 1);

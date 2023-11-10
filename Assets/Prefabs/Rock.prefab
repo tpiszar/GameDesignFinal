@@ -140,8 +140,8 @@ MonoBehaviour:
   canvas: {fileID: 660003758873807229}
   healthMin: 40
   healthMax: 90
-  resourceMin: 1
-  resourceMax: 5
+  resourceMin: 10
+  resourceMax: 20
 --- !u!1 &5491081058690407370
 GameObject:
   m_ObjectHideFlags: 0

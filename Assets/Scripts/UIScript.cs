@@ -38,5 +38,11 @@ public class UIScript : MonoBehaviour
     public void Restart()
     {
         Player.ResourceCount = 0;
+        Player.Level = 0;
+        Player.speedBonus = 0;
+        Player.healthBonus = 0;
+        Player.meleeDmgBonus = 0;
+        Player.bulletDmgBonus = 0;
+        Player.fireRateBonus = 0;
     }
 }
