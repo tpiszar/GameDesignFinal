@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
 public class Spawner : MonoBehaviour
@@ -36,6 +37,29 @@ public class Spawner : MonoBehaviour
 
     public TextMeshProUGUI timerTxt;
 
+    public float spdPerc;
+    public float healthPerc;
+    public float dmgPerc;
+
+    public int spdCap;
+    public int healthCap;
+    public int dmgCap;
+
+    float spd;
+    int flyHp;
+    int GroHp;
+    int dmg;
+
+    public float spawnPointsPerc;
+    public float waveUpDelPerc;
+    public float waveDownDelPerc;
+    public float pointIncrPerc;
+
+    public int spawnPointsCap;
+    public int waveUpCap;
+    public int waveDownCap;
+    public int pointIncrCap;
+
     //int curType;
     //Vector3 selSpawn;
 
@@ -67,6 +91,41 @@ public class Spawner : MonoBehaviour
     {
         //maxWaves = waves.Length;
         incursionTime *= 60;
+
+        if (Player.Level > spdCap)
+        {
+            spd = enemies[0].GetComponent<NavMeshAgent>().speed;
+            spd += (spd * spdPerc * Player.Level);
+        }
+        if (Player.Level > healthCap)
+        {
+            flyHp = enemies[0].GetComponent<FlyingEnemy>().health;
+            flyHp += (int)(flyHp * healthPerc * Player.Level);
+            GroHp = enemies[0].GetComponent<GroundEnemy>().health;
+            GroHp += (int)(GroHp * healthPerc * Player.Level);
+        }
+        if (Player.Level > dmgCap)
+        {
+            dmg = enemies[0].GetComponent<FlyingEnemy>().attkDmg;
+            dmg += (int)(dmg * dmgPerc * Player.Level);
+        }
+
+        if (Player.Level > spawnPointsCap)
+        {
+            spawnPoints += (int)(spawnPoints * spawnPointsPerc * Player.Level);
+        }
+        if (Player.Level > waveUpCap)
+        {
+            upperWave -= (upperWave * waveDownDelPerc * Player.Level);
+        }
+        if (Player.Level > waveDownCap) 
+        {
+            lowerWave -= (lowerWave * waveDownDelPerc * Player.Level);
+        }
+        if (Player.Level > pointIncrCap)
+        {
+            pointIncr += (int)(pointIncrCap * pointIncrPerc * Player.Level);
+        }
     }
 
     // Update is called once per frame
@@ -197,5 +256,19 @@ public class Spawner : MonoBehaviour
         yield return new WaitForSeconds(spawnDelay * num);
 
         GameObject newEn = Instantiate(enemies[type], transform.GetChild(pos).position, Quaternion.identity);
+
+        FlyingEnemy fly = newEn.GetComponent<FlyingEnemy>();
+        if (fly)
+        {
+            fly.health = flyHp;
+            fly.attkDmg = dmg;
+        }
+        else
+        {
+            GroundEnemy ground = newEn.GetComponent<GroundEnemy>();
+            ground.health = GroHp;
+            ground.damage = dmg;
+        }
+        newEn.GetComponent<NavMeshAgent>().speed = spd;
     }
 }

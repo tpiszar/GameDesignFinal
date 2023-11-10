@@ -7219,18 +7219,32 @@ MonoBehaviour:
   groundPoints: 3
   pointIncr: 1
   waveDelay: 5
-  upperWave: 20
-  lowerWave: 30
+  upperWave: 15
+  lowerWave: 25
   enemies:
   - {fileID: 4400288417951692457, guid: 7f0eca7bcb33f6d4abb8dab5e454578f, type: 3}
   - {fileID: 512567387844451543, guid: 165c7a7367b7aa54d80f75add1d5ea5c, type: 3}
-  incursionTime: 0.1
+  incursionTime: 2
   incursionRamp: 5
   portal: {fileID: 1565635030062774394, guid: db824f293153f34498dadf65f83f7310, type: 3}
   endCam: {fileID: 1272713318}
   mainUI: {fileID: 857270790}
   victUI: {fileID: 1434877021}
   timerTxt: {fileID: 346403467}
+  spdPerc: 0.05
+  healthPerc: 0.1
+  dmgPerc: 0.2
+  spdCap: 10
+  healthCap: 10
+  dmgCap: 8
+  spawnPointsPerc: 0.1
+  waveUpDelPerc: 0.03
+  waveDownDelPerc: 0.06
+  pointIncrPerc: 0.167
+  spawnPointsCap: 10
+  waveUpCap: 11
+  waveDownCap: 10
+  pointIncrCap: 12
 --- !u!1 &2075927094
 GameObject:
   m_ObjectHideFlags: 0

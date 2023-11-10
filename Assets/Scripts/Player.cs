@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
         healthScr = GetComponentInChildren<PlayerHealth>();
 
         Level++;
-        agent.speed += (int)(agent.speed * spdPerc * speedBonus);
+        agent.speed += (agent.speed * spdPerc * speedBonus);
         healthScr.maxHealth += (int)(healthScr.maxHealth * healthPerc * healthBonus);
         meleeScr.meleeDmg += (int)(meleeScr.meleeDmg * meleeDmgPerc * meleeDmgBonus);
         shootScr.damage += (int)(shootScr.damage * bulletDmgPerc * bulletDmgBonus);
