@@ -50,5 +50,21 @@ public class WeaponSwap : MonoBehaviour
                 pick.SetActive(false);
             }
         }
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            start = true;
+            shoot.enabled = false;
+            gun.SetActive(false);
+            melee.enabled = true;
+            pick.SetActive(true);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            start = false;
+            shoot.enabled = true;
+            gun.SetActive(true);
+            melee.enabled = false;
+            pick.SetActive(false);
+        }
     }
 }
