@@ -32,7 +32,7 @@ public class GroundEnemy : MonoBehaviour
         following,
         shooting
     }
-    state currentState = state.following;
+    public state currentState = state.following;
     float nextMove;
     public float patrolRange;
 
@@ -44,6 +44,10 @@ public class GroundEnemy : MonoBehaviour
     public float bulletSpeed = 20f;
 
     private float nextTimeToFire = 0f;
+
+    public bool poisoned = false;
+    public float poisonTick = 1;
+    float nextPoison = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -61,6 +65,16 @@ public class GroundEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (poisoned)
+        {
+            nextPoison += Time.deltaTime;
+            if (nextPoison > poisonTick)
+            {
+                nextPoison = 0;
+                TakeDamage(1);
+            }
+        }
+
         //Debug.DrawLine(transform.position, transform.forward * detectDistance, Color.red);
         //Debug.DrawLine(transform.position, -transform.forward * detectDistance, Color.red);
         //Debug.DrawLine(transform.position, transform.right * detectDistance, Color.red);
@@ -219,14 +233,18 @@ public class GroundEnemy : MonoBehaviour
         healthBar.value = health;
         if (health <= 0)
         {
+            if (PlayerHealth.LifeStealCount != 0)
+            {
+                FindObjectOfType<PlayerHealth>().GainHealth();
+            }
             Destroy(this.gameObject);
         }
     }
 
-    public void knockBack(float impact, Transform attacker)
+    public void knockBack(float impact, Vector3 attacker)
     {
         agent.enabled = false;
-        Vector3 dir = transform.position - attacker.transform.position;
+        Vector3 dir = transform.position - attacker;
         dir.y = 0;
         dir.Normalize();
         dir *= impact;

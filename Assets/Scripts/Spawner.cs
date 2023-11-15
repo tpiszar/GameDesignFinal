@@ -113,22 +113,18 @@ public class Spawner : MonoBehaviour
         if (Player.Level <= spawnPointsCap)
         {
             spawnPoints += (int)(spawnPoints * spawnPointsPerc * (Player.Level - 1));
-            print("Sp: " + spawnPoints);
         }
         if (Player.Level <= waveUpCap)
         {
             upperWave -= (upperWave * waveDownDelPerc * (Player.Level - 1));
-            print("uw: " + upperWave);
         }
         if (Player.Level <= waveDownCap) 
         {
             lowerWave -= (lowerWave * waveDownDelPerc * (Player.Level - 1));
-            print("lw: " + lowerWave);
         }
         if (Player.Level <= pointIncrCap)
         {
             pointIncr += (int)(pointIncr * pointIncrPerc * (Player.Level - 1));
-            print("pI: " + pointIncr);
         }
     }
 

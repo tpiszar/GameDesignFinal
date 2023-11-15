@@ -20,13 +20,17 @@ public class FlyingEnemy : MonoBehaviour
     bool returning = false;
     public float closeEnough;
 
-    bool knocked;
+    public bool knocked;
     Rigidbody rig;
 
     public int attkDmg;
 
     public Slider healthBar;
     public Canvas canvas;
+
+    public bool poisoned = false;
+    public float poisonTick = 1;
+    float nextPoison = 0;
 
     // Start is called before the first frame update
 
@@ -48,6 +52,16 @@ public class FlyingEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (poisoned)
+        {
+            nextPoison += Time.deltaTime;
+            if (nextPoison > poisonTick)
+            {
+                nextPoison = 0;
+                TakeDamage(1);
+            }
+        }
+
         if (knocked)
         {
             if (rig.velocity.magnitude < 0.001f)
@@ -128,14 +142,18 @@ public class FlyingEnemy : MonoBehaviour
         healthBar.value = health;
         if (health <= 0)
         {
+            if (PlayerHealth.LifeStealCount != 0)
+            {
+                FindObjectOfType<PlayerHealth>().GainHealth();
+            }
             Destroy(this.gameObject);
         }
     }
 
-    public void knockBack(float impact, Transform attacker)
+    public void knockBack(float impact, Vector3 attacker)
     {
         agent.enabled = false;
-        Vector3 dir = transform.position - attacker.transform.position;
+        Vector3 dir = transform.position - attacker;
         dir.y = 0;
         dir.Normalize();
         dir *= impact;

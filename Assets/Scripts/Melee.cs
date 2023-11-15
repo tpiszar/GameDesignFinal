@@ -52,7 +52,7 @@ public class Melee : MonoBehaviour
         FlyingEnemy flyEn = other.GetComponent<FlyingEnemy>();
         if (flyEn)
         {
-            flyEn.knockBack(impact, transform);
+            flyEn.knockBack(impact, transform.position);
             flyEn.TakeDamage(meleeDmg);
         }
         else
@@ -60,7 +60,7 @@ public class Melee : MonoBehaviour
             GroundEnemy groEn = other.GetComponentInParent<GroundEnemy>();
             if (groEn)
             {
-                groEn.knockBack(impact, transform);
+                groEn.knockBack(impact, transform.position);
                 groEn.TakeDamage(meleeDmg);
             }
             else

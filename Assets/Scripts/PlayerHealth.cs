@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
+    public static int LifeStealCount = 1;
+    public float lifeStealPerc = 0.1f;
+
     public int maxHealth;
     int health;
     public float dmgCooldown;
@@ -48,6 +51,23 @@ public class PlayerHealth : MonoBehaviour
                 Destroy(gameObject);
             }
             StartCoroutine(dmgFlash());
+        }
+    }
+
+    public void GainHealth()
+    {
+        int hp = (int)(maxHealth * lifeStealPerc * LifeStealCount);
+        if (health < maxHealth)
+        {
+            if (health + hp > maxHealth)
+            {
+                health = maxHealth;
+            }
+            else
+            {
+                health += hp;
+                healthBar.value = health;
+            }
         }
     }
 

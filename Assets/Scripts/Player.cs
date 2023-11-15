@@ -22,11 +22,16 @@ public class Player : MonoBehaviour
     public static int bulletDmgBonus = 0;
     public static int fireRateBonus = 0;
 
+    public static int poisonBonus = 0;
+    public static int AoEBonus = 0;
+
     public float spdPerc;
     public float healthPerc;
     public float meleeDmgPerc;
     public float bulletDmgPerc;
     public float fireRatePerc;
+
+    public float poisonPerc;
 
     public int spdCap;
     public int healthCap;
@@ -53,7 +58,12 @@ public class Player : MonoBehaviour
         meleeScr.meleeDmg += (int)(meleeScr.meleeDmg * meleeDmgPerc * meleeDmgBonus);
         shootScr.damage += (int)(shootScr.damage * bulletDmgPerc * bulletDmgBonus);
         shootScr.fireRate += (int)(shootScr.fireRate * fireRatePerc * fireRateBonus);
-        
+
+        if (poisonBonus > 0)
+        {
+            shootScr.poisonPerc = poisonPerc;
+            shootScr.poisonTick = 1 / Mathf.Pow(2, poisonBonus);
+        }
     }
 
     // Update is called once per frame

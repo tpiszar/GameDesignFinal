@@ -350,7 +350,6 @@ GameObject:
   - component: {fileID: 512567387475482555}
   - component: {fileID: 512567387475482556}
   - component: {fileID: 512567387475482557}
-  - component: {fileID: 1992897298886776963}
   m_Layer: 6
   m_Name: Capsule
   m_TagString: Untagged
@@ -442,39 +441,12 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
   m_Height: 3.664083
   m_Direction: 1
   m_Center: {x: 0, y: 0.8320407, z: 0}
---- !u!54 &1992897298886776963
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 512567387475482559}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 30
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 80
-  m_CollisionDetection: 0
 --- !u!1 &512567387822379248
 GameObject:
   m_ObjectHideFlags: 0
@@ -576,6 +548,8 @@ GameObject:
   - component: {fileID: 512567387844451537}
   - component: {fileID: 512567387844451541}
   - component: {fileID: 512567387844451542}
+  - component: {fileID: 3585821973471808193}
+  - component: {fileID: 3199906806549385004}
   m_Layer: 6
   m_Name: GroundEnemy
   m_TagString: Untagged
@@ -656,6 +630,56 @@ MonoBehaviour:
   fireRate: 2
   bulletSpeed: 7
   health: 70
+--- !u!136 &3585821973471808193
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 512567387844451543}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2.1366518
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.06832588, z: 0}
+--- !u!54 &3199906806549385004
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 512567387844451543}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 20
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0
 --- !u!1 &512567387847005158
 GameObject:
   m_ObjectHideFlags: 0

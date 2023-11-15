@@ -5,6 +5,14 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public int damage;
+    public bool knockUp = false;
+    public float impact = 25;
+    public bool AoE = false;
+    public float AoEmod;
+    public float AoErange;
+    public bool poison = false;
+    public float poisonTick;
+
 
     public enum shooter
     {
@@ -17,7 +25,7 @@ public class Bullet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -49,37 +57,72 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+
         if (shotBy == shooter.player)
         {
-            GroundEnemy GrEn = other.gameObject.GetComponentInParent<GroundEnemy>();
-            if (GrEn)
+            HitEnemy(other, damage, 0);
+            Collider[] cols = Physics.OverlapSphere(transform.position, AoErange);
+            foreach (Collider col in cols)
             {
-                GrEn.TakeDamage(damage);
-            }
-            else
-            {
-                FlyingEnemy FlyEn = other.gameObject.GetComponentInParent<FlyingEnemy>();
-                if (FlyEn)
-                {
-                    FlyEn.TakeDamage(damage);
-                }
-            }
-            if (other.gameObject.layer != 3 && other.gameObject.layer != 7)
-            {
-                Destroy(this.gameObject);
+                HitEnemy(col, (int)(damage * AoEmod), 1);
             }
         }
         else
         {
-            PlayerHealth player = other.gameObject.GetComponent<PlayerHealth>();
-            if (player)
+            HitPlayer(other);
+        }
+    }
+
+    void HitEnemy(Collider other, int dmg, int hit)
+    {
+        GroundEnemy GrEn = other.gameObject.GetComponentInParent<GroundEnemy>();
+        if (GrEn)
+        {
+            if (hit == 0)
             {
-                player.TakeDamage(damage);
+                GrEn.poisoned = poison;
+                GrEn.poisonTick = poisonTick;
+                if (knockUp && GrEn.currentState != 0)
+                {
+                    GrEn.knockBack(25, GrEn.transform.forward + GrEn.transform.position);
+                }
             }
-            if (other.gameObject.layer != 6 && other.gameObject.layer != 7)
+
+            GrEn.TakeDamage(dmg);
+        }
+        else
+        {
+            FlyingEnemy FlyEn = other.gameObject.GetComponentInParent<FlyingEnemy>();
+            if (FlyEn)
             {
-                Destroy(this.gameObject);
+                if (hit == 0)
+                {
+                    if (knockUp && !FlyEn.knocked)
+                    {
+                        FlyEn.knockBack(25, FlyEn.transform.forward + FlyEn.transform.position);
+                    }
+                    FlyEn.poisoned = poison;
+                    FlyEn.poisonTick = poisonTick;
+                }
+
+                FlyEn.TakeDamage(dmg);
             }
+        }
+        if (other.gameObject.layer != 3 && other.gameObject.layer != 7)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+    void HitPlayer(Collider other)
+    {
+        PlayerHealth player = other.gameObject.GetComponent<PlayerHealth>();
+        if (player)
+        {
+            player.TakeDamage(damage);
+        }
+        if (other.gameObject.layer != 6 && other.gameObject.layer != 7)
+        {
+            Destroy(this.gameObject);
         }
     }
 }
