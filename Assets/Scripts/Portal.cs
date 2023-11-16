@@ -28,9 +28,7 @@ public class Portal : MonoBehaviour
             Destroy(other.transform.parent.gameObject);
             endCam.SetActive(true);
             mainUI.SetActive(false);
-            print(victUI.name);
             victUI.SetActive(true);
-            print(victUI.active);
             Time.timeScale = 0;
         }
     }

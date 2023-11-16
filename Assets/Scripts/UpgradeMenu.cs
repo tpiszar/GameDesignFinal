@@ -444,6 +444,9 @@ public class UpgradeMenu : MonoBehaviour
             case 19:
                 Player.rockShatterBonus++;
                 break;
+            case 20:
+                Player.invincBonus++;
+                break;
         }
     }
 }

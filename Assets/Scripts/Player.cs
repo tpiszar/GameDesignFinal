@@ -13,7 +13,7 @@ using System;
 public class Player : MonoBehaviour
 {
     public static int ResourceCount = 0;
-    public static int Level = 0;
+    public static int Level = 1;
     public TextMeshProUGUI resourceTxt;
     public GameObject deathScreen;
     public GameObject mainUI;
@@ -39,6 +39,7 @@ public class Player : MonoBehaviour
     public static int resourceSpdBonus = 0;
     public static int rockStealBonus = 0;
     public static int rockShatterBonus = 0;
+    public static int invincBonus = 0;
 
     public float spdPerc;
     public float healthPerc;
@@ -54,12 +55,13 @@ public class Player : MonoBehaviour
     public float antiGravSpdPerc, antiGravDmgPerc;
     public float reflectPerc;
     public float resourceSpdPerc;
+    public float invicPerc;
 
-    public int spdCap;
-    public int healthCap;
-    public int meleeDmgCap;
-    public int bulletDmgCap;
-    public int fireRateCap;
+    //public int spdCap;
+    //public int healthCap;
+    //public int meleeDmgCap;
+    //public int bulletDmgCap;
+    //public int fireRateCap;
 
     NavMeshAgent agent;
     PlayerHealth healthScr;
@@ -130,6 +132,8 @@ public class Player : MonoBehaviour
             reflectTotal += reflectPerc;
         }
         reflectPerc = reflectTotal;
+
+        healthScr.dmgCooldown += healthScr.dmgCooldown * invicPerc * invincBonus;
 
         agent.speed += speed;
         healthScr.maxHealth += hp;

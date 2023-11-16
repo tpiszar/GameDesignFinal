@@ -51,6 +51,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (dmgTime > dmgCooldown)
         {
+            dmgTime = 0;
             health -= dmg;
 
             if (Player.gasLeakBonus > 0)
@@ -120,7 +121,6 @@ public class PlayerHealth : MonoBehaviour
                 else
                 {
                     health += hp;
-                    healthBar.value = health;
                 }
                 if (type != 0)
                 {
@@ -128,12 +128,13 @@ public class PlayerHealth : MonoBehaviour
                 }
             }
         }
+        healthBar.value = health;
     }
 
     IEnumerator dmgFlash()
     {
         mr.material = dmgMat;
-        yield return new WaitForSeconds(dmgFlashTime);
+        yield return new WaitForSeconds(dmgCooldown);// dmgFlashTime);
         mr.material = mat;
     }
 }

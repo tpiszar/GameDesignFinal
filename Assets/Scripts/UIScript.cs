@@ -60,5 +60,6 @@ public class UIScript : MonoBehaviour
         Player.resourceSpdBonus = 0;
         Player.rockStealBonus = 0;
         Player.rockShatterBonus = 0;
-}
+        Player.invincBonus = 0;
+    }
 }

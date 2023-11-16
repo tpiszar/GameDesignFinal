@@ -2011,6 +2011,11 @@ MonoBehaviour:
     name: Rock Shatter
     description: Breaking materials releases an area of effect explosion that damages
       nearby enemies. Multiple copies increase damage and range.
+  - minPrice: 25
+    maxPrice: 35
+    name: Kinetic Absorption Shield
+    description: Become invulnerable for a short time after taking damage. Multiple
+      copies increase the duration.
   up1Name: {fileID: 660333013}
   up1Desc: {fileID: 832024227}
   up1Price: {fileID: 499588615}

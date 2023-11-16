@@ -97,6 +97,11 @@ public class Spawner : MonoBehaviour
             spd = enemies[0].GetComponent<NavMeshAgent>().speed;
             spd += (spd * spdPerc * (Player.Level - 1));
         }
+        else
+        {
+            spd = enemies[0].GetComponent<NavMeshAgent>().speed;
+            spd += (spd * spdPerc * spdCap);
+        }
         if (Player.Level <= healthCap)
         {
             flyHp = enemies[0].GetComponent<FlyingEnemy>().health;
@@ -104,27 +109,55 @@ public class Spawner : MonoBehaviour
             GroHp = enemies[1].GetComponent<GroundEnemy>().health;
             GroHp += (int)(GroHp * healthPerc * (Player.Level - 1));
         }
+        else
+        {
+            flyHp = enemies[0].GetComponent<FlyingEnemy>().health;
+            flyHp += (int)(flyHp * healthPerc * healthCap);
+            GroHp = enemies[1].GetComponent<GroundEnemy>().health;
+            GroHp += (int)(GroHp * healthPerc * healthCap);
+        }
         if (Player.Level <= dmgCap)
         {
             dmg = enemies[0].GetComponent<FlyingEnemy>().attkDmg;
             dmg += (int)(dmg * dmgPerc * (Player.Level - 1));
+        }
+        else
+        {
+            dmg = enemies[0].GetComponent<FlyingEnemy>().attkDmg;
+            dmg += (int)(dmg * dmgPerc * dmgCap);
         }
 
         if (Player.Level <= spawnPointsCap)
         {
             spawnPoints += (int)(spawnPoints * spawnPointsPerc * (Player.Level - 1));
         }
+        else
+        {
+            spawnPoints += (int)(spawnPoints * spawnPointsPerc * spawnPointsCap);
+        }
         if (Player.Level <= waveUpCap)
         {
             upperWave -= (upperWave * waveDownDelPerc * (Player.Level - 1));
         }
-        if (Player.Level <= waveDownCap) 
+        else
+        {
+            upperWave -= (upperWave * waveDownDelPerc * waveUpCap);
+        }
+        if (Player.Level <= waveDownCap)
         {
             lowerWave -= (lowerWave * waveDownDelPerc * (Player.Level - 1));
+        }
+        else
+        {
+            lowerWave -= (lowerWave * waveDownDelPerc * waveDownCap);
         }
         if (Player.Level <= pointIncrCap)
         {
             pointIncr += (int)(pointIncr * pointIncrPerc * (Player.Level - 1));
+        }
+        else
+        {
+            pointIncr += (int)(pointIncr * pointIncrPerc * pointIncrCap);
         }
     }
 

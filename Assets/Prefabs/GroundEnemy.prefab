@@ -84,7 +84,7 @@ MonoBehaviour:
   m_Direction: 0
   m_MinValue: 0
   m_MaxValue: 100
-  m_WholeNumbers: 0
+  m_WholeNumbers: 1
   m_Value: 100
   m_OnValueChanged:
     m_PersistentCalls:
@@ -623,12 +623,15 @@ MonoBehaviour:
   shootDistance: 15
   healthBar: {fileID: 3056818801668723843}
   canvas: {fileID: 578669886911383627}
+  currentState: 1
   patrolRange: 3
   shootPoint: {fileID: 512567386786170938}
   bullet: {fileID: 2277164167728435418, guid: d4efea76215781746b0b151c2cfa32eb, type: 3}
   damage: 10
   fireRate: 2
   bulletSpeed: 7
+  poisoned: 0
+  poisonTick: 1
   health: 70
 --- !u!136 &3585821973471808193
 CapsuleCollider:

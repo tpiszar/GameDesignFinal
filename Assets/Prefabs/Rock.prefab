@@ -141,9 +141,9 @@ MonoBehaviour:
   healthMin: 40
   healthMax: 90
   resourceMin: 1
-  resourceMax: 5
+  resourceMax: 3
   rockStealPerc: 0
-  shatterPerc: 0.5
+  shatterPerc: 1
   shatterRange: 5
 --- !u!1 &5491081058690407370
 GameObject:
@@ -229,7 +229,7 @@ MonoBehaviour:
   m_Direction: 0
   m_MinValue: 0
   m_MaxValue: 100
-  m_WholeNumbers: 0
+  m_WholeNumbers: 1
   m_Value: 100
   m_OnValueChanged:
     m_PersistentCalls:

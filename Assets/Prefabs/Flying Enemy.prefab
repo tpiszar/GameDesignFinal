@@ -203,7 +203,7 @@ MonoBehaviour:
   m_Direction: 0
   m_MinValue: 0
   m_MaxValue: 100
-  m_WholeNumbers: 0
+  m_WholeNumbers: 1
   m_Value: 100
   m_OnValueChanged:
     m_PersistentCalls:
@@ -433,9 +433,12 @@ MonoBehaviour:
   attkRate: 0.75
   attkSpeed: 20
   closeEnough: 1.01
+  knocked: 0
   attkDmg: 10
   healthBar: {fileID: 6103232836172205167}
   canvas: {fileID: 1383390250510033582}
+  poisoned: 0
+  poisonTick: 1
   health: 50
 --- !u!136 &3286123078735510540
 CapsuleCollider:

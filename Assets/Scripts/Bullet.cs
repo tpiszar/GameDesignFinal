@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -133,7 +134,13 @@ public class Bullet : MonoBehaviour
         {
             if (Player.reflectBonus != 0)
             {
-                if (Random.value < other.transform.parent.GetComponent<Player>().reflectPerc * Player.reflectBonus)
+                float baseChance = other.transform.parent.GetComponent<Player>().reflectPerc;
+                float chance = baseChance;
+                for (int i = 1; i < Player.reflectBonus; i++)
+                {
+                    chance += baseChance / Mathf.Pow(2, Player.reflectBonus - 1);
+                }
+                if (Random.value < chance)
                 {
                     GetComponent<Rigidbody>().AddForce(GetComponent<Rigidbody>().velocity * -2, ForceMode.Impulse);
                     shotBy = shooter.player;
