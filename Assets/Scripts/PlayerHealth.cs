@@ -21,7 +21,6 @@ public class PlayerHealth : MonoBehaviour
 
     public Slider healthBar;
 
-    public bool gasLeak = false;
     public float explodeRange;
     public float explodeRate;
     float nextExplode = 0;
@@ -54,7 +53,7 @@ public class PlayerHealth : MonoBehaviour
         {
             health -= dmg;
 
-            if (gasLeak)
+            if (Player.gasLeakBonus > 0)
             {
                 if (nextExplode > explodeRate)
                 {

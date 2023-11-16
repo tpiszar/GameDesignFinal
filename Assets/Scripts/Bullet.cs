@@ -101,7 +101,7 @@ public class Bullet : MonoBehaviour
                 GrEn.poisonTick = poisonTick;
                 if (knockUp && GrEn.currentState != 0)
                 {
-                    GrEn.knockBack(25, GrEn.transform.forward + GrEn.transform.position, stunDur);
+                    GrEn.knockBack(25, FindObjectOfType<PlayerHealth>().transform.position, stunDur);
                 }
             }
 

@@ -93,12 +93,12 @@ public class Player : MonoBehaviour
         if (poisonBonus > 0)
         {
             shootScr.poisonPerc = poisonPerc;
-            shootScr.poisonTick = 1 / Mathf.Pow(2, poisonBonus);
+            shootScr.poisonTick = shootScr.poisonTick / Mathf.Pow(2, poisonBonus);
         }
         if (AoEBonus > 0)
         {
             shootScr.AoE = true;
-            shootScr.AoEmod += (shootScr.AoEmod * AoEperc * AoEBonus - 1);
+            shootScr.AoEmod += (shootScr.AoEmod * AoEperc * (AoEBonus - 1));
             shootScr.AoErange += AoEBonus;
         }
         if (knockBackBonus > 0)

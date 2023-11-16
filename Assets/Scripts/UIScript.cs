@@ -44,5 +44,21 @@ public class UIScript : MonoBehaviour
         Player.meleeDmgBonus = 0;
         Player.bulletDmgBonus = 0;
         Player.fireRateBonus = 0;
-    }
+
+        Player.poisonBonus = 0;
+        Player.AoEBonus = 0;
+        Player.lifeStealBonus = 0;
+        Player.knockBackBonus = 0;
+        Player.jugBonus = 0;
+        Player.glassBonus = 0;
+        Player.antiGravBonus = 0;
+        Player.lifeSupportBonus = 0;
+        Player.richMatsBonus = 0;
+        Player.armorPierceBonus = 0;
+        Player.gasLeakBonus = 0;
+        Player.reflectBonus = 0;
+        Player.resourceSpdBonus = 0;
+        Player.rockStealBonus = 0;
+        Player.rockShatterBonus = 0;
+}
 }

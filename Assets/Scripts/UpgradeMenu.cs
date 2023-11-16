@@ -64,15 +64,15 @@ public class UpgradeMenu : MonoBehaviour
 
     public TextMeshProUGUI up1Name;
     public TextMeshProUGUI up1Desc;
-    public TextMeshProUGUI up1price;
+    public TextMeshProUGUI up1Price;
     public Button up1Btn;
     public TextMeshProUGUI up2Name;
     public TextMeshProUGUI up2Desc;
-    public TextMeshProUGUI up2price;
+    public TextMeshProUGUI up2Price;
     public Button up2Btn;
     public TextMeshProUGUI up3Name;
     public TextMeshProUGUI up3Desc;
-    public TextMeshProUGUI up3price;
+    public TextMeshProUGUI up3Price;
     public Button up3Btn;
 
     // Start is called before the first frame update
@@ -94,13 +94,13 @@ public class UpgradeMenu : MonoBehaviour
 
         up1Name.text = upgrades[up1].name;
         up1Desc.text = upgrades[up1].description;
-        up1price.text = price1.ToString();
+        up1Price.text = price1.ToString();
         up2Name.text = upgrades[up2].name;
         up2Desc.text = upgrades[up2].description;
-        up2price.text = price2.ToString();
+        up2Price.text = price2.ToString();
         up3Name.text = upgrades[up3].name;
         up3Desc.text = upgrades[up3].description;
-        up3price.text = price3.ToString();
+        up3Price.text = price3.ToString();
 
         if (price1 > Player.ResourceCount)
         {
@@ -341,7 +341,7 @@ public class UpgradeMenu : MonoBehaviour
         int choice = 0;
         switch (button)
         {
-            case 1:
+            case 0:
                 choice = up1;
                 Player.ResourceCount -= price1;
                 up1Btn.interactable = false;
@@ -354,7 +354,7 @@ public class UpgradeMenu : MonoBehaviour
                     up3Btn.interactable = false;
                 }
                 break;
-            case 2:
+            case 1:
                 choice = up2;
                 Player.ResourceCount -= price2;
                 up2Btn.interactable = false;
@@ -367,7 +367,7 @@ public class UpgradeMenu : MonoBehaviour
                     up3Btn.interactable = false;
                 }
                 break;
-            case 3:
+            case 2:
                 choice = up3;
                 Player.ResourceCount -= price3;
                 up3Btn.interactable = false;
@@ -381,6 +381,7 @@ public class UpgradeMenu : MonoBehaviour
                 }
                 break;
         }
+        resourceTxt.text = "Resource Count: " + Player.ResourceCount;
         switch (choice)
         {
             case 0:
