@@ -13,6 +13,9 @@ public class Bullet : MonoBehaviour
     public bool poison = false;
     public float poisonTick;
 
+    public float stunDur = 0;
+
+    public int armorPiercing = 0;
 
     public enum shooter
     {
@@ -61,10 +64,24 @@ public class Bullet : MonoBehaviour
         if (shotBy == shooter.player)
         {
             HitEnemy(other, damage, 0);
-            Collider[] cols = Physics.OverlapSphere(transform.position, AoErange);
-            foreach (Collider col in cols)
+            if (AoE)
             {
-                HitEnemy(col, (int)(damage * AoEmod), 1);
+                Collider[] cols = Physics.OverlapSphere(transform.position, AoErange);
+                foreach (Collider col in cols)
+                {
+                    HitEnemy(col, (int)(damage * AoEmod), 1);
+                }
+            }
+            if (other.gameObject.layer != 3 && other.gameObject.layer != 7)
+            {
+                if (armorPiercing == 0)
+                {
+                    Destroy(this.gameObject);
+                }
+                else
+                {
+                    armorPiercing--;
+                }
             }
         }
         else
@@ -84,7 +101,7 @@ public class Bullet : MonoBehaviour
                 GrEn.poisonTick = poisonTick;
                 if (knockUp && GrEn.currentState != 0)
                 {
-                    GrEn.knockBack(25, GrEn.transform.forward + GrEn.transform.position);
+                    GrEn.knockBack(25, GrEn.transform.forward + GrEn.transform.position, stunDur);
                 }
             }
 
@@ -99,7 +116,7 @@ public class Bullet : MonoBehaviour
                 {
                     if (knockUp && !FlyEn.knocked)
                     {
-                        FlyEn.knockBack(25, FlyEn.transform.forward + FlyEn.transform.position);
+                        FlyEn.knockBack(25, FlyEn.transform.forward + FlyEn.transform.position, stunDur);
                     }
                     FlyEn.poisoned = poison;
                     FlyEn.poisonTick = poisonTick;
@@ -108,16 +125,21 @@ public class Bullet : MonoBehaviour
                 FlyEn.TakeDamage(dmg);
             }
         }
-        if (other.gameObject.layer != 3 && other.gameObject.layer != 7)
-        {
-            Destroy(this.gameObject);
-        }
     }
     void HitPlayer(Collider other)
     {
         PlayerHealth player = other.gameObject.GetComponent<PlayerHealth>();
         if (player)
         {
+            if (Player.reflectBonus != 0)
+            {
+                if (Random.value < other.transform.parent.GetComponent<Player>().reflectPerc * Player.reflectBonus)
+                {
+                    GetComponent<Rigidbody>().AddForce(GetComponent<Rigidbody>().velocity * -2, ForceMode.Impulse);
+                    shotBy = shooter.player;
+                    return;
+                }
+            }
             player.TakeDamage(damage);
         }
         if (other.gameObject.layer != 6 && other.gameObject.layer != 7)

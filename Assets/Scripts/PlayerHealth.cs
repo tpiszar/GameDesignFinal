@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public static int LifeStealCount = 1;
     public float lifeStealPerc = 0.1f;
+    public float rockStealPerc = 0.2f;
 
     public int maxHealth;
-    int health;
+    public int health;
     public float dmgCooldown;
     float dmgTime;
 
@@ -19,6 +20,13 @@ public class PlayerHealth : MonoBehaviour
     public float dmgFlashTime;
 
     public Slider healthBar;
+
+    public bool gasLeak = false;
+    public float explodeRange;
+    public float explodeRate;
+    float nextExplode = 0;
+
+    public float reflectChance = 0.15f;
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +45,7 @@ public class PlayerHealth : MonoBehaviour
     void Update()
     {
         dmgTime += Time.deltaTime;
+        nextExplode += Time.deltaTime;
     }
 
     public void TakeDamage(int dmg)
@@ -44,29 +53,80 @@ public class PlayerHealth : MonoBehaviour
         if (dmgTime > dmgCooldown)
         {
             health -= dmg;
-            healthBar.value = health;
+
+            if (gasLeak)
+            {
+                if (nextExplode > explodeRate)
+                {
+                    nextExplode = 0;
+                    Collider[] cols = Physics.OverlapSphere(transform.position, explodeRange + Player.gasLeakBonus);
+                    foreach (Collider col in cols)
+                    {
+                        GroundEnemy GrEn = col.gameObject.GetComponentInParent<GroundEnemy>();
+                        if (GrEn)
+                        {
+                            GrEn.knockBack(50, transform.position);
+                            GrEn.TakeDamage((int)(dmg * Player.gasLeakBonus));
+                            
+                        }
+                        else
+                        {
+                            FlyingEnemy FlyEn = col.gameObject.GetComponentInParent<FlyingEnemy>();
+                            if (FlyEn)
+                            {
+                                FlyEn.knockBack(50, transform.position);
+                                FlyEn.TakeDamage((int)(dmg * Player.gasLeakBonus));
+                            }
+                        }
+                    }
+                }
+            }
             if (health <= 0)
             {
-                GetComponentInParent<Player>().Dead();
-                Destroy(gameObject);
+                if (Player.lifeSupportBonus > 0)
+                {
+                    health = 1;
+                    Player.lifeSupportBonus--;
+                }
+                else
+                {
+                    GetComponentInParent<Player>().Dead();
+                    Destroy(gameObject);
+                }
             }
+            healthBar.value = health;
             StartCoroutine(dmgFlash());
         }
     }
 
-    public void GainHealth()
+    public void GainHealth(int type)
     {
-        int hp = (int)(maxHealth * lifeStealPerc * LifeStealCount);
+        int hp;
+        if (type == 0)
+        {
+            hp = (int)(maxHealth * lifeStealPerc * Player.lifeStealBonus);
+        }
+        else
+        {
+            hp = (int)(maxHealth * rockStealPerc * Player.rockStealBonus);
+        }
         if (health < maxHealth)
         {
-            if (health + hp > maxHealth)
+            if (type == 0 || Player.ResourceCount > 0)
             {
-                health = maxHealth;
-            }
-            else
-            {
-                health += hp;
-                healthBar.value = health;
+                if (health + hp > maxHealth)
+                {
+                    health = maxHealth;
+                }
+                else
+                {
+                    health += hp;
+                    healthBar.value = health;
+                }
+                if (type != 0)
+                {
+                    Player.ResourceCount--;
+                }
             }
         }
     }

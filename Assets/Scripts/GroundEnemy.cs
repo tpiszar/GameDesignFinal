@@ -49,6 +49,8 @@ public class GroundEnemy : MonoBehaviour
     public float poisonTick = 1;
     float nextPoison = 0;
 
+    float stunned = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -113,8 +115,12 @@ public class GroundEnemy : MonoBehaviour
     {
         if (rig.velocity.magnitude < 0.001f)
         {
-            agent.enabled = true;
-            currentState = state.following;
+            stunned -= Time.deltaTime;
+            if (stunned < 0)
+            {
+                agent.enabled = true;
+                currentState = state.following;
+            }
         }
     }
 
@@ -233,9 +239,9 @@ public class GroundEnemy : MonoBehaviour
         healthBar.value = health;
         if (health <= 0)
         {
-            if (PlayerHealth.LifeStealCount != 0)
+            if (Player.lifeStealBonus != 0)
             {
-                FindObjectOfType<PlayerHealth>().GainHealth();
+                FindObjectOfType<PlayerHealth>().GainHealth(0);
             }
             Destroy(this.gameObject);
         }
@@ -251,5 +257,19 @@ public class GroundEnemy : MonoBehaviour
         rig.AddForce(dir, ForceMode.Impulse);
         rig.angularVelocity = Vector3.zero;
         currentState = state.knockedBack;
+    }
+
+    public void knockBack(float impact, Vector3 attacker, float stunTime)
+    {
+        agent.enabled = false;
+        Vector3 dir = transform.position - attacker;
+        dir.y = 0;
+        dir.Normalize();
+        dir *= impact;
+        rig.AddForce(dir, ForceMode.Impulse);
+        rig.angularVelocity = Vector3.zero;
+        currentState = state.knockedBack;
+
+        stunned = stunTime;
     }
 }

@@ -3495,17 +3495,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4747607614816529399, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
   m_PrefabInstance: {fileID: 3576024055336455707}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &981477397 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5205504081973783045, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
-  m_PrefabInstance: {fileID: 3576024055336455707}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 981477396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5504bb30abde17647963708df43951b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1030574289
 GameObject:
   m_ObjectHideFlags: 0
@@ -4486,21 +4475,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   titleTxt: {fileID: 652938431}
-  up1Txt: {fileID: 1305843273}
-  up2Txt: {fileID: 1758397828}
-  up1CountTxt: {fileID: 741783754}
-  up2CountTxt: {fileID: 1640182957}
   resourceTxt: {fileID: 1822370933}
-  up1Decr: {fileID: 1731550708}
-  up1Incr: {fileID: 25625151}
-  up2Decr: {fileID: 601189263}
-  up2Incr: {fileID: 1771200352}
-  speedPrice: 10
-  healthPrice: 10
-  meleePrice: 10
-  bulletPrice: 10
-  firePrice: 10
-  player: {fileID: 981477397}
+  upgrades:
+  - minPrice: 20
+    maxPrice: 30
+    name: Rocket Boots
+    description: Increases speed.
+  - minPrice: 20
+    maxPrice: 30
+    name: Steel Plating
+    description: Increases health.
+  - minPrice: 20
+    maxPrice: 30
+    name: Hardened Steel
+    description: Increases melee damage.
+  - minPrice: 20
+    maxPrice: 30
+    name: Reinforced Rounds
+    description: Increases bullet damage.
+  - minPrice: 20
+    maxPrice: 30
+    name: Gatling Gun
+    description: Increases fire rate.
+  - minPrice: 25
+    maxPrice: 35
+    name: Molecular Destabilization Rounds
+    description: Bullets have a chance to add a damage over time effect to enemies.
+      Multiple copies increase damage.
+  up1Name: {fileID: 0}
+  up1Desc: {fileID: 0}
+  up1price: {fileID: 0}
+  up1Btn: {fileID: 0}
+  up2Name: {fileID: 0}
+  up2Desc: {fileID: 0}
+  up2price: {fileID: 0}
+  up2Btn: {fileID: 0}
+  up3Name: {fileID: 0}
+  up3Desc: {fileID: 0}
+  up3price: {fileID: 0}
+  up3Btn: {fileID: 0}
 --- !u!1 &1437621559
 GameObject:
   m_ObjectHideFlags: 0
@@ -7814,6 +7827,10 @@ PrefabInstance:
       propertyPath: start
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1658614424446882874, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3846678976743087439, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -7829,6 +7846,10 @@ PrefabInstance:
     - target: {fileID: 4423407700129424351, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
       propertyPath: m_Speed
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4423407700129424351, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
+      propertyPath: m_AgentTypeID
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4423407700129424351, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
       propertyPath: m_AngularSpeed
@@ -7859,16 +7880,28 @@ PrefabInstance:
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5205504081973783045, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
+      propertyPath: AoEperc
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5205504081973783045, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
       propertyPath: spdPerc
-      value: 0.05
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5205504081973783045, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
       propertyPath: healthCap
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5205504081973783045, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
+      propertyPath: jugHpPerc
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5205504081973783045, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
       propertyPath: healthPerc
-      value: 0.2
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5205504081973783045, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
+      propertyPath: jugSpdPerc
+      value: 1.75
       objectReference: {fileID: 0}
     - target: {fileID: 5205504081973783045, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
       propertyPath: poisonPerc
@@ -7883,8 +7916,16 @@ PrefabInstance:
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5205504081973783045, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
+      propertyPath: glassHpPerc
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5205504081973783045, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
       propertyPath: meleeDmgCap
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5205504081973783045, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
+      propertyPath: reflectPerc
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5205504081973783045, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
       propertyPath: resourceTxt
@@ -7896,15 +7937,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5205504081973783045, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
       propertyPath: fireRatePerc
-      value: 0.1
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5205504081973783045, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
+      propertyPath: glassDmgPerc
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5205504081973783045, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
       propertyPath: meleeDmgPerc
-      value: 0.1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5205504081973783045, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
       propertyPath: bulletDmgPerc
-      value: 0.1
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5205504081973783045, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
+      propertyPath: knockBackTime
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 5205504081973783045, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
+      propertyPath: antiGravDmgPerc
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5205504081973783045, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
+      propertyPath: antiGravSpdPerc
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5205504081973783045, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
+      propertyPath: resourceSpdPerc
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5205504081973783045, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
+      propertyPath: resourceSpdTime
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5941035414518465509, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7928,7 +7993,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6166261311853844002, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
       propertyPath: AoE
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6166261311853844002, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
       propertyPath: AoEmod
@@ -7948,7 +8013,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6166261311853844002, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
       propertyPath: knockBack
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6166261311853844002, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
       propertyPath: m_Enabled
@@ -7970,8 +8035,16 @@ PrefabInstance:
       propertyPath: bulletSpeed
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 6166261311853844002, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
+      propertyPath: armorPiercing
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6538168709700657307, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6900621518912944925, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
+      propertyPath: gasLeak
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6900621518912944925, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
@@ -7983,15 +8056,31 @@ PrefabInstance:
       value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 6900621518912944925, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
+      propertyPath: explodeMod
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6900621518912944925, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
       propertyPath: dmgCooldown
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6900621518912944925, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
+      propertyPath: explodeRate
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6900621518912944925, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
       propertyPath: dmgFlashTime
       value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 6900621518912944925, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
+      propertyPath: explodeRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6900621518912944925, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
       propertyPath: lifeStealPerc
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 6900621518912944925, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
+      propertyPath: rockStealPerc
       value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 7200115144225847860, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}

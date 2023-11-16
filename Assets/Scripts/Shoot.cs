@@ -17,6 +17,7 @@ public class Shoot : MonoBehaviour
 
     public bool knockBack = false;
     public float impact = 400;
+    public float stunDur = 0;
 
     public bool AoE = false;
     public float AoEmod = 2;
@@ -24,6 +25,8 @@ public class Shoot : MonoBehaviour
 
     public float poisonTick = 1;
     public float poisonPerc = 1;
+
+    public int armorPiercing = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -43,10 +46,12 @@ public class Shoot : MonoBehaviour
             Bullet bull = newBullet.GetComponent<Bullet>();
             bull.damage = damage;
             bull.knockUp = knockBack;
+            bull.stunDur = stunDur;
             bull.impact = impact / (fireRate * fireRate);
             bull.AoE = AoE;
             bull.AoEmod = AoEmod;
             bull.AoErange = AoErange;
+            bull.armorPiercing = armorPiercing;
             if (Random.value <= poisonPerc * (4 / fireRate))
             {
                 bull.poison = true;
