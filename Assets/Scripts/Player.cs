@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
     public static int reflectBonus = 0;
     public static int resourceSpdBonus = 0;
     public static int rockStealBonus = 0;
-    public static int rockShatterBonus = 0;
+    public static int rockShatterBonus = 1;
     public static int invincBonus = 0;
 
     public float spdPerc;
@@ -95,7 +95,7 @@ public class Player : MonoBehaviour
         if (poisonBonus > 0)
         {
             shootScr.poisonPerc = poisonPerc;
-            shootScr.poisonTick = shootScr.poisonTick / Mathf.Pow(2, poisonBonus);
+            shootScr.poisonTick = shootScr.poisonTick / Mathf.Pow(2, poisonBonus - 1);
         }
         if (AoEBonus > 0)
         {

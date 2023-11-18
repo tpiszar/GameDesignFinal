@@ -34,6 +34,10 @@ public class FlyingEnemy : MonoBehaviour
 
     float stunned = 0;
 
+    public SpawnEffect[] poisonEffs;
+
+    public ParticleSystem knockBackEff;
+
     // Start is called before the first frame update
 
     void Start()
@@ -49,6 +53,10 @@ public class FlyingEnemy : MonoBehaviour
         healthBar.maxValue = health;
         healthBar.value = health;
         canvas.enabled = false;
+
+        poisonEffs = GetComponentsInChildren<SpawnEffect>();
+
+        maxHealth = health;
     }
 
     // Update is called once per frame
@@ -140,6 +148,7 @@ public class FlyingEnemy : MonoBehaviour
     }
 
     public int health = 50;
+    public int maxHealth;
 
     public void TakeDamage(int amount)
     {
@@ -168,6 +177,8 @@ public class FlyingEnemy : MonoBehaviour
         attack = false;
         returning = false;
         knocked = true;
+
+        knockBackEff.Play();
     }
 
     public void knockBack(float impact, Vector3 attacker, float stunTime)
@@ -184,5 +195,7 @@ public class FlyingEnemy : MonoBehaviour
         knocked = true;
 
         stunned = stunTime;
+
+        knockBackEff.Play();
     }
 }

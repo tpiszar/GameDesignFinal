@@ -145,6 +145,7 @@ MonoBehaviour:
   rockStealPerc: 0
   shatterPerc: 1
   shatterRange: 5
+  particleShatter: {fileID: 2783853477198165555, guid: 40af47b84a40aac40b7a2b67efbb1781, type: 3}
 --- !u!1 &5491081058690407370
 GameObject:
   m_ObjectHideFlags: 0

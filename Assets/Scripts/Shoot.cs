@@ -60,7 +60,7 @@ public class Shoot : MonoBehaviour
             newBullet.GetComponent<Rigidbody>().AddForce(dir.normalized * bulletSpeed, ForceMode.Impulse);
             newBullet.transform.forward = dir.normalized;
             newBullet.transform.Rotate(new Vector3(90, 0, 0));
-            //Destroy(newBullet, 5f);
+            Destroy(newBullet, 10f);
 
             nextTimeToFire = Time.time + 1f / fireRate;
         }

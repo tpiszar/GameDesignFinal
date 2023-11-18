@@ -51,6 +51,9 @@ public class GroundEnemy : MonoBehaviour
 
     float stunned = 0;
 
+    public SpawnEffect[] poisonEffs;
+    public ParticleSystem knockBackEff;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -62,6 +65,10 @@ public class GroundEnemy : MonoBehaviour
         healthBar.maxValue = health;
         healthBar.value = health;
         canvas.enabled = false;
+
+        poisonEffs = GetComponentsInChildren<SpawnEffect>();
+
+        maxHealth = health;
     }
 
     // Update is called once per frame
@@ -227,10 +234,11 @@ public class GroundEnemy : MonoBehaviour
         newBullet.GetComponent<Rigidbody>().AddForce(dir.normalized * bulletSpeed, ForceMode.Impulse);
         newBullet.transform.forward = dir.normalized;
         newBullet.transform.Rotate(new Vector3(90, 0, 0));
-        Destroy(newBullet, 5f);
+        Destroy(newBullet, 10f);
     }
 
     public int health = 100;
+    public int maxHealth;
 
     public void TakeDamage(int amount)
     {
@@ -257,6 +265,8 @@ public class GroundEnemy : MonoBehaviour
         rig.AddForce(dir, ForceMode.Impulse);
         rig.angularVelocity = Vector3.zero;
         currentState = state.knockedBack;
+
+        knockBackEff.Play();
     }
 
     public void knockBack(float impact, Vector3 attacker, float stunTime)
@@ -271,5 +281,7 @@ public class GroundEnemy : MonoBehaviour
         currentState = state.knockedBack;
 
         stunned = stunTime;
+
+        knockBackEff.Play();
     }
 }

@@ -18,6 +18,8 @@ public class Bullet : MonoBehaviour
 
     public int armorPiercing = 0;
 
+    public GameObject explosion;
+
     public enum shooter
     {
         player,
@@ -67,10 +69,16 @@ public class Bullet : MonoBehaviour
             HitEnemy(other, damage, 0);
             if (AoE)
             {
-                Collider[] cols = Physics.OverlapSphere(transform.position, AoErange);
-                foreach (Collider col in cols)
+                if (other.gameObject.layer != 7 && other.gameObject.layer != 3)
                 {
-                    HitEnemy(col, (int)(damage * AoEmod), 1);
+                    GameObject explode = Instantiate(explosion, transform.position, Quaternion.identity);
+                    explode.transform.localScale = Vector3.one * AoErange;
+                    Destroy(explode, 2f);
+                    Collider[] cols = Physics.OverlapSphere(transform.position, AoErange);
+                    foreach (Collider col in cols)
+                    {
+                        HitEnemy(col, (int)(damage * AoEmod), 1);
+                    }
                 }
             }
             if (other.gameObject.layer != 3 && other.gameObject.layer != 7)
@@ -98,11 +106,27 @@ public class Bullet : MonoBehaviour
         {
             if (hit == 0)
             {
-                GrEn.poisoned = poison;
-                GrEn.poisonTick = poisonTick;
+                if (poison && !GrEn.poisoned)
+                {
+                    GrEn.poisoned = poison;
+                    GrEn.poisonTick = poisonTick;
+                    foreach (SpawnEffect effs in GrEn.poisonEffs)
+                    {
+                        effs.enabled = true;
+                    }
+                }
+
                 if (knockUp && GrEn.currentState != 0)
                 {
                     GrEn.knockBack(25, FindObjectOfType<PlayerHealth>().transform.position, stunDur);
+                }
+            }
+            if (GrEn.poisoned)
+            {
+                foreach (SpawnEffect effs in GrEn.poisonEffs)
+                {
+                    effs.spawnEffectTime = GrEn.poisonTick * GrEn.maxHealth;
+                    effs.timer = effs.spawnEffectTime * (1f - (float)GrEn.health / (float)GrEn.maxHealth);
                 }
             }
 
@@ -115,12 +139,27 @@ public class Bullet : MonoBehaviour
             {
                 if (hit == 0)
                 {
+                    if (poison && !FlyEn.poisoned)
+                    {
+                        FlyEn.poisoned = poison;
+                        FlyEn.poisonTick = poisonTick;
+                        foreach (SpawnEffect effs in FlyEn.poisonEffs)
+                        {
+                            effs.enabled = true;
+                        }
+                    }
                     if (knockUp && !FlyEn.knocked)
                     {
                         FlyEn.knockBack(25, FlyEn.transform.forward + FlyEn.transform.position, stunDur);
                     }
-                    FlyEn.poisoned = poison;
-                    FlyEn.poisonTick = poisonTick;
+                }
+                if (FlyEn.poisoned)
+                {
+                    foreach (SpawnEffect effs in FlyEn.poisonEffs)
+                    {
+                        effs.spawnEffectTime = FlyEn.poisonTick * FlyEn.maxHealth;
+                        effs.timer = effs.spawnEffectTime * (1f - (float)FlyEn.health / (float)FlyEn.maxHealth);
+                    }
                 }
 
                 FlyEn.TakeDamage(dmg);

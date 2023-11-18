@@ -48,7 +48,7 @@ public class Tutorial : MonoBehaviour
         }
         else if (stage == 3 && transform.childCount == 0)
         {
-            directTxt.text = "Each World Has an Incusion Timer. When it Reaches 0 a Portal Opens and Enemies Begin Rapidly Spawning.";
+            directTxt.text = "Each World Has an Incursion Timer. When it Reaches 0 a Portal Opens and Enemies Begin Rapidly Spawning.";
             stage++;
         }
         else if (stage == 4)

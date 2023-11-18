@@ -20,6 +20,8 @@ public class Rock : MonoBehaviour
     public float shatterPerc = 0.5f;
     public float shatterRange;
 
+    public GameObject particleShatter;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,6 +57,8 @@ public class Rock : MonoBehaviour
             }
             if (Player.rockShatterBonus > 0 )
             {
+                GameObject shatter = Instantiate(particleShatter, transform.position, Quaternion.identity);
+                shatter.transform.Rotate(new Vector3(-90, 0, 0));
                 int baseDmg = FindObjectOfType<Melee>().meleeDmg;
                 Collider[] cols = Physics.OverlapSphere(transform.position, shatterRange + Player.rockShatterBonus);
                 foreach (Collider col in cols)
