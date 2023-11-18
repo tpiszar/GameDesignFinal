@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
     public static int reflectBonus = 0;
     public static int resourceSpdBonus = 0;
     public static int rockStealBonus = 0;
-    public static int rockShatterBonus = 1;
+    public static int rockShatterBonus = 0;
     public static int invincBonus = 0;
 
     public float spdPerc;

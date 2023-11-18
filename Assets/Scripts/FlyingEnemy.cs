@@ -38,6 +38,8 @@ public class FlyingEnemy : MonoBehaviour
 
     public ParticleSystem knockBackEff;
 
+    public GameObject deathEff;
+
     // Start is called before the first frame update
 
     void Start()
@@ -152,11 +154,20 @@ public class FlyingEnemy : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
+        if (health == maxHealth)
+        {
+            canvas.enabled = true;
+        }
+
         health -= amount;
-        canvas.enabled = true;
         healthBar.value = health;
         if (health <= 0)
         {
+            if (!poisoned)
+            {
+                Instantiate(deathEff, transform.position, Quaternion.identity);
+            }
+
             if (Player.lifeStealBonus != 0)
             {
                 FindObjectOfType<PlayerHealth>().GainHealth(0);

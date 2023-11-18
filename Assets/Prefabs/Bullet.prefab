@@ -159,4 +159,5 @@ MonoBehaviour:
   stunDur: 0
   armorPiercing: 0
   explosion: {fileID: 1337198075554910, guid: 25c7aa9ad705fe143a4d71c1c8deb7d4, type: 3}
+  particleHit: {fileID: 7226583673155636401, guid: a2ab56839e1c9504ea9d141e95d0b16b, type: 3}
   shotBy: 0

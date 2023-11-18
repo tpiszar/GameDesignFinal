@@ -27,6 +27,8 @@ public class PlayerHealth : MonoBehaviour
 
     public float reflectChance = 0.15f;
 
+    public GameObject explosion;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -59,14 +61,18 @@ public class PlayerHealth : MonoBehaviour
                 if (nextExplode > explodeRate)
                 {
                     nextExplode = 0;
+
+                    GameObject explode = Instantiate(explosion, transform.position, Quaternion.identity);
+                    explode.transform.localScale = Vector3.one * 3;
+
                     Collider[] cols = Physics.OverlapSphere(transform.position, explodeRange + Player.gasLeakBonus);
                     foreach (Collider col in cols)
                     {
                         GroundEnemy GrEn = col.gameObject.GetComponentInParent<GroundEnemy>();
                         if (GrEn)
                         {
-                            GrEn.knockBack(50, transform.position);
-                            GrEn.TakeDamage((int)(dmg * Player.gasLeakBonus));
+                            GrEn.knockBack(100, transform.position, 1);
+                            GrEn.TakeDamage((int)(dmg * Player.gasLeakBonus + 1));
                             
                         }
                         else
@@ -74,8 +80,8 @@ public class PlayerHealth : MonoBehaviour
                             FlyingEnemy FlyEn = col.gameObject.GetComponentInParent<FlyingEnemy>();
                             if (FlyEn)
                             {
-                                FlyEn.knockBack(50, transform.position);
-                                FlyEn.TakeDamage((int)(dmg * Player.gasLeakBonus));
+                                FlyEn.knockBack(100, transform.position, 1);
+                                FlyEn.TakeDamage((int)(dmg * Player.gasLeakBonus + 1));
                             }
                         }
                     }

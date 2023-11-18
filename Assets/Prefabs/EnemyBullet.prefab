@@ -149,4 +149,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
+  knockUp: 0
+  impact: 25
+  AoE: 0
+  AoEmod: 0
+  AoErange: 0
+  poison: 0
+  poisonTick: 0
+  stunDur: 0
+  armorPiercing: 0
+  explosion: {fileID: 0}
+  particleHit: {fileID: 7226583673155636401, guid: a2ab56839e1c9504ea9d141e95d0b16b, type: 3}
   shotBy: 1

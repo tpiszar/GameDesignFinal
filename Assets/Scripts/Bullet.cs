@@ -20,6 +20,8 @@ public class Bullet : MonoBehaviour
 
     public GameObject explosion;
 
+    public GameObject particleHit;
+
     public enum shooter
     {
         player,
@@ -63,6 +65,31 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.layer == 2)
+        {
+            return;
+        }
+        if (other.gameObject.layer != 7)
+        {
+            MeshRenderer mesh = other.gameObject.GetComponent<MeshRenderer>();
+            if (!mesh)
+            {
+                mesh = other.gameObject.GetComponentInChildren<MeshRenderer>();
+            }
+            if (mesh)
+            {
+                GameObject hitEffect = Instantiate(particleHit, transform.position - transform.up * 0.15f, Quaternion.identity);
+                hitEffect.transform.parent = other.transform;
+                var main = hitEffect.GetComponent<ParticleSystem>().main;
+                ParticleSystem[] systems = hitEffect.GetComponentsInChildren<ParticleSystem>();
+                main.startColor = mesh.material.color;
+                foreach (ParticleSystem s in systems)
+                {
+                    var sMain = s.main;
+                    sMain.startColor = mesh.material.color;
+                }
+            }
+        }
 
         if (shotBy == shooter.player)
         {
