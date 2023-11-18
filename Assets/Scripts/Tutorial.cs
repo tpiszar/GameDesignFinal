@@ -6,6 +6,7 @@ using UnityEngine;
 public class Tutorial : MonoBehaviour
 {
     public TextMeshProUGUI directTxt;
+    public TextMeshProUGUI directTxt2;
     public TextMeshProUGUI timerTxt;
 
     int stage = 0;
@@ -37,21 +38,26 @@ public class Tutorial : MonoBehaviour
     {
         if (stage == 0 && Input.GetMouseButtonDown(1))
         {
-            directTxt.text = "Left Click to Attack in Mouse Direction. Break Through the Resources to Proceed.";
+            directTxt.text = "Left Click to Attack in Mouse Direction. Breaking Materials Gives You Resources That Can Be Used to Buy Upgardes After Each World. Break Through the Materials to Proceed.";
             stage++;
         }
-        else if (stage == 2 && transform.childCount == 3)
+        else if (stage == 2 && transform.childCount == 4)
+        {
+            directTxt.text = "Scroll the Mouse Wheel or Press 2 to switch to your gun. Hold Left Click and Shoot the Enemy.";
+            stage++;
+        }
+        else if (stage == 3 && transform.childCount == 3)
         {
             directTxt.text = "Melee or Shoot the Enemies to Defeat Them.";
             Destroy(wall);
             stage++;
         }
-        else if (stage == 3 && transform.childCount == 0)
+        else if (stage == 4 && transform.childCount == 0)
         {
             directTxt.text = "Each World Has an Incursion Timer. When it Reaches 0 a Portal Opens and Enemies Begin Rapidly Spawning.";
             stage++;
         }
-        else if (stage == 4)
+        else if (stage == 5)
         {
             timer -= Time.deltaTime;
             float minutes = Mathf.FloorToInt(timer / 60);
@@ -90,7 +96,7 @@ public class Tutorial : MonoBehaviour
     {
         if (stage == 1)
         {
-            directTxt.text = "Scroll the Mouse Wheel or Press 2 to switch to your gun. Hold Left Click and Shoot the Enemy.";
+            directTxt.text = "Melee the enemy to kill it. Melee attacks knock back and stun enemies prventing attacks for a short time.";
         }
         stage++;
     }

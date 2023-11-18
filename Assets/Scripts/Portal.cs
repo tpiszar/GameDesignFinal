@@ -39,6 +39,7 @@ public class Portal : MonoBehaviour
         {
             other.gameObject.GetComponent<NavMeshAgent>().enabled = false;
             other.transform.position = new Vector3(0, -100, 0);
+            Destroy(other.transform.parent.GetComponentInChildren<Camera>().gameObject);
             endCam.SetActive(true);
             mainUI.SetActive(false);
             victUI.SetActive(true);

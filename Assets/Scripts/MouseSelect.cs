@@ -50,6 +50,7 @@ public class MouseSelect : MonoBehaviour
 
                 clickMarkerPrefab.SetActive(true);
                 clickMarkerPrefab.transform.position = pos;
+
             }
         }
         if (Input.GetMouseButton(0))
@@ -78,6 +79,7 @@ public class MouseSelect : MonoBehaviour
         if (Vector3.Distance(agent.destination, player.position) <= 1.05)
         {
             clickMarkerPrefab.SetActive(false);
+            lineRenderer.positionCount = 0;
         }
         else if (agent.hasPath)
         {

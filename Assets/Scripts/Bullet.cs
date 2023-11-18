@@ -99,7 +99,7 @@ public class Bullet : MonoBehaviour
                 if (other.gameObject.layer != 7 && other.gameObject.layer != 3)
                 {
                     GameObject explode = Instantiate(explosion, transform.position, Quaternion.identity);
-                    explode.transform.localScale = Vector3.one * AoErange;
+                    explode.transform.localScale = Vector3.one * AoErange * 0.6f;
                     Destroy(explode, 2f);
                     Collider[] cols = Physics.OverlapSphere(transform.position, AoErange);
                     foreach (Collider col in cols)

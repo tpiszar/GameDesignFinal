@@ -29,6 +29,7 @@ public class Melee : MonoBehaviour
         nextAttk += Time.deltaTime;
         if (Input.GetMouseButtonDown(0) && nextAttk >= attkRate)
         {
+            hits.Clear();
             collide.enabled = true;
             nextAttk = 0;
             attkAnim.Play();
@@ -38,7 +39,6 @@ public class Melee : MonoBehaviour
 
     void disableCollider()
     {
-        hits.Clear();
         collide.enabled = false;
     }
 

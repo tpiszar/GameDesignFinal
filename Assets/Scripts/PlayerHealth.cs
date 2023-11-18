@@ -63,7 +63,7 @@ public class PlayerHealth : MonoBehaviour
                     nextExplode = 0;
 
                     GameObject explode = Instantiate(explosion, transform.position, Quaternion.identity);
-                    explode.transform.localScale = Vector3.one * 3;
+                    explode.transform.localScale = Vector3.one * 2.5f;
 
                     Collider[] cols = Physics.OverlapSphere(transform.position, explodeRange + Player.gasLeakBonus);
                     foreach (Collider col in cols)
