@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Portal : MonoBehaviour
 {
     public GameObject endCam;
+    public GameObject miniMap;
     public GameObject mainUI;
     public GameObject victUI;
 
@@ -41,6 +43,7 @@ public class Portal : MonoBehaviour
             other.transform.position = new Vector3(0, -100, 0);
             Destroy(other.transform.parent.GetComponentInChildren<Camera>().gameObject);
             endCam.SetActive(true);
+            miniMap.SetActive(false);
             mainUI.SetActive(false);
             victUI.SetActive(true);
             Time.timeScale = 0;

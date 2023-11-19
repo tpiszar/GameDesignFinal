@@ -13,7 +13,7 @@ using System;
 public class Player : MonoBehaviour
 {
     public static int ResourceCount = 0;
-    public static int Level = 1;
+    public static int Level = 0;
     public TextMeshProUGUI resourceTxt;
     public GameObject deathScreen;
     public GameObject mainUI;

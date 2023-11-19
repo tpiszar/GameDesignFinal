@@ -17,7 +17,7 @@ public class Rock : MonoBehaviour
     public int resourceMax;
 
     int health;
-    int maxHealth;
+    public int maxHealth;
     int resource;
 
     public int rockStealPerc;

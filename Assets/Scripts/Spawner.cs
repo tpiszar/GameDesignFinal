@@ -32,6 +32,7 @@ public class Spawner : MonoBehaviour
 
     public GameObject portal;
     public GameObject endCam;
+    public GameObject miniMap;
     public GameObject mainUI;
     public GameObject victUI;
 
@@ -186,6 +187,7 @@ public class Spawner : MonoBehaviour
                 port.transform.Rotate(new Vector3(-90, 0, 0));
                 Portal portScr = port.GetComponent<Portal>();
                 portScr.endCam = endCam;
+                portScr.miniMap = miniMap;
                 portScr.mainUI = mainUI;
                 portScr.victUI = victUI;
                 timerTxt.text = "Portal Opened. Incursion Inbound!";

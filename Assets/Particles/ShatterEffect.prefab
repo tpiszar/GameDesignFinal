@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4288578331417754636}
   - component: {fileID: 8420907054208508575}
   - component: {fileID: 1083381177773022017}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: ShatterEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4829,7 +4829,7 @@ GameObject:
   - component: {fileID: 6835230711779921367}
   - component: {fileID: 6797370869911287627}
   - component: {fileID: 5300502905552573084}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Shockwave
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using TMPro;
 //using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+//using UnityEngine.UIElements;
 
 public class UpgradeMenu : MonoBehaviour
 {
@@ -11,15 +13,25 @@ public class UpgradeMenu : MonoBehaviour
     //public static int lastChosen2 = -1;
 
     public TextMeshProUGUI titleTxt;
-    //public TextMeshProUGUI up1Txt;
-    //public TextMeshProUGUI up2Txt;
-    //public TextMeshProUGUI up1CountTxt;
-    //public TextMeshProUGUI up2CountTxt;
+
     public TextMeshProUGUI resourceTxt;
-    //public Button up1Decr;
-    //public Button up1Incr;
-    //public Button up2Decr;
-    //public Button up2Incr;
+
+    public TextMeshProUGUI canTxt;
+    public TextMeshProUGUI dynTxt;
+    public TextMeshProUGUI canCountTxt;
+    public TextMeshProUGUI dynCountTxt;
+    public Button canDecr;
+    public Button canIncr;
+    public Button dynDecr;
+    public Button dynIncr;
+
+    public int canPrice;
+    public int dynPrice;
+    public int canCap;
+    public int dynCap;
+
+    int canFloor;
+    int dynFloor;
 
     //public int speedPrice;
     //public int healthPrice;
@@ -75,9 +87,32 @@ public class UpgradeMenu : MonoBehaviour
     public TextMeshProUGUI up3Price;
     public Button up3Btn;
 
+    public TextMeshProUGUI up1BtnTxt;
+    public TextMeshProUGUI up2BtnTxt;
+    public TextMeshProUGUI up3BtnTxt;
+
+    bool up1Buy = false;
+    bool up2Buy = false;
+    bool up3Buy = false;
+
     // Start is called before the first frame update
     void Start()
     {
+        canTxt.text = "Health Canister: (" + canPrice.ToString() + ")";
+        dynTxt.text = "Dyanamite: (" + dynPrice.ToString() + ")";
+        canCountTxt.text = PlayerHealth.healthCanCount + " / " + canCap;
+        dynCountTxt.text = DynamiteDropper.dynamiteCount + " / " + dynCap;
+        if (Player.ResourceCount < canPrice || PlayerHealth.healthCanCount == canCap)
+        {
+            canIncr.interactable = false;
+        }
+        if (Player.ResourceCount < dynPrice || DynamiteDropper.dynamiteCount == dynCap)
+        {
+            dynIncr.interactable = false;
+        }
+        canFloor = PlayerHealth.healthCanCount;
+        dynFloor = DynamiteDropper.dynamiteCount;
+
         up1 = Random.Range(0, upgrades.Length);
         do
         {
@@ -226,6 +261,104 @@ public class UpgradeMenu : MonoBehaviour
         
     }
 
+    public void incr(int choice)
+    {
+        if (choice == 0)
+        {
+            PlayerHealth.healthCanCount++;
+            Player.ResourceCount -= canPrice;
+            canCountTxt.text = PlayerHealth.healthCanCount + " / " + canCap;
+            if (Player.ResourceCount < canPrice || PlayerHealth.healthCanCount == canCap)
+            {
+                canIncr.interactable = false;
+            }
+            if (Player.ResourceCount < dynPrice || DynamiteDropper.dynamiteCount == dynCap)
+            {
+                dynIncr.interactable = false;
+            }
+            canDecr.interactable = true;
+        }
+        else
+        {
+            DynamiteDropper.dynamiteCount++;
+            Player.ResourceCount -= dynPrice;
+            dynCountTxt.text = DynamiteDropper.dynamiteCount + " / " + dynCap;
+            if (Player.ResourceCount < canPrice || PlayerHealth.healthCanCount == canCap)
+            {
+                canIncr.interactable = false;
+            }
+            if (Player.ResourceCount < dynPrice || DynamiteDropper.dynamiteCount == dynCap)
+            {
+                dynIncr.interactable = false;
+            }
+            dynDecr.interactable = true;
+        }
+
+        if (price1 > Player.ResourceCount && !up1Buy)
+        {
+            up1Btn.interactable = false;
+        }
+        if (price2 > Player.ResourceCount && !up2Buy)
+        {
+            up2Btn.interactable = false;
+        }
+        if (price3 > Player.ResourceCount && !up3Buy)
+        {
+            up3Btn.interactable = false;
+        }
+
+        resourceTxt.text = "Resource Count: " + Player.ResourceCount;
+    }
+
+    public void decr(int choice)
+    {
+        if (choice == 0)
+        {
+            PlayerHealth.healthCanCount--;
+            Player.ResourceCount += canPrice;
+            canCountTxt.text = PlayerHealth.healthCanCount + " / " + canCap;
+            if (PlayerHealth.healthCanCount == canFloor)
+            {
+                canDecr.interactable = false;
+            }
+            canIncr.interactable = true;
+            if (Player.ResourceCount >= dynPrice)
+            {
+                dynIncr.interactable = true;
+            }
+        }
+        else
+        {
+            DynamiteDropper.dynamiteCount--;
+            Player.ResourceCount += dynPrice;
+            dynCountTxt.text = DynamiteDropper.dynamiteCount + " / " + dynCap;
+            if (DynamiteDropper.dynamiteCount == dynFloor)
+            {
+                dynDecr.interactable = false;
+            }
+            dynIncr.interactable = true;
+            if (Player.ResourceCount >= canPrice)
+            {
+                canIncr.interactable = true;
+            }
+        }
+
+        if (price1 <= Player.ResourceCount)
+        {
+            up1Btn.interactable = true;
+        }
+        if (price2 <= Player.ResourceCount)
+        {
+            up2Btn.interactable = true;
+        }
+        if (price3 <= Player.ResourceCount)
+        {
+            up3Btn.interactable = true;
+        }
+
+        resourceTxt.text = "Resource Count: " + Player.ResourceCount;
+    }
+
     //public void incrUpgrade(int choice)
     //{
     //    if (choice == 0)
@@ -342,46 +475,81 @@ public class UpgradeMenu : MonoBehaviour
         switch (button)
         {
             case 0:
+                if (up1Buy)
+                {
+                    Cancel(0);
+                    return;
+                }
+                up1Buy = true;
+                up1BtnTxt.text = "Cancel";
+
                 choice = up1;
                 Player.ResourceCount -= price1;
-                up1Btn.interactable = false;
-                if (price2 > Player.ResourceCount)
+                //up1Btn.interactable = false;
+                if (price2 > Player.ResourceCount && !up2Buy)
                 {
                     up2Btn.interactable = false;
                 }
-                if (price3 > Player.ResourceCount)
+                if (price3 > Player.ResourceCount && !up3Buy)
                 {
                     up3Btn.interactable = false;
                 }
                 break;
             case 1:
+                if (up2Buy)
+                {
+                    Cancel(1);
+                    return;
+                }
+                up2Buy = true;
+                up2BtnTxt.text = "Cancel";
+
                 choice = up2;
                 Player.ResourceCount -= price2;
-                up2Btn.interactable = false;
-                if (price1 > Player.ResourceCount)
+                //up2Btn.interactable = false;
+                if (price1 > Player.ResourceCount && !up1Buy)
                 {
                     up1Btn.interactable = false;
                 }
-                if (price3 > Player.ResourceCount)
+                if (price3 > Player.ResourceCount && !up3Buy)
                 {
                     up3Btn.interactable = false;
                 }
                 break;
             case 2:
+                if (up3Buy)
+                {
+                    Cancel(2);
+                    return;
+                }
+                up3Buy = true;
+                up3BtnTxt.text = "Cancel";
+
                 choice = up3;
                 Player.ResourceCount -= price3;
-                up3Btn.interactable = false;
-                if (price2 > Player.ResourceCount)
+                //up3Btn.interactable = false;
+                if (price2 > Player.ResourceCount && !up2Buy)
                 {
                     up2Btn.interactable = false;
                 }
-                if (price1 > Player.ResourceCount)
+                if (price1 > Player.ResourceCount && !up1Buy)
                 {
                     up1Btn.interactable = false;
                 }
                 break;
         }
+
+        if (Player.ResourceCount < canPrice)
+        {
+            canIncr.interactable = false;
+        }
+        if (Player.ResourceCount < dynPrice)
+        {
+            dynIncr.interactable = false;
+        }
+
         resourceTxt.text = "Resource Count: " + Player.ResourceCount;
+
         switch (choice)
         {
             case 0:
@@ -446,6 +614,140 @@ public class UpgradeMenu : MonoBehaviour
                 break;
             case 20:
                 Player.invincBonus++;
+                break;
+        }
+    }
+
+    void Cancel(int button)
+    {
+        int choice = 0;
+        switch (button)
+        {
+            case 0:
+                up1Buy = false;
+                up1BtnTxt.text = "Buy";
+
+                choice = up1;
+                Player.ResourceCount += price1;
+                //up1Btn.interactable = true;
+                if (price2 <= Player.ResourceCount)
+                {
+                    up2Btn.interactable = true;
+                }
+                if (price3 <= Player.ResourceCount)
+                {
+                    up3Btn.interactable = true;
+                }
+                break;
+            case 1:
+                up2Buy = false;
+                up2BtnTxt.text = "Buy";
+
+                choice = up2;
+                Player.ResourceCount += price2;
+                //up2Btn.interactable = true;
+                if (price1 <= Player.ResourceCount)
+                {
+                    up1Btn.interactable = true;
+                }
+                if (price3 <= Player.ResourceCount)
+                {
+                    up3Btn.interactable = true;
+                }
+                break;
+            case 2:
+                up3Buy = false;
+                up3BtnTxt.text = "Buy";
+
+                choice = up3;
+                Player.ResourceCount += price3;
+                //up3Btn.interactable = true;
+                if (price2 <= Player.ResourceCount)
+                {
+                    up2Btn.interactable = true;
+                }
+                if (price1 <= Player.ResourceCount)
+                {
+                    up1Btn.interactable = true;
+                }
+                break;
+        }
+
+        if (Player.ResourceCount >= canPrice && PlayerHealth.healthCanCount != canCap)
+        {
+            canIncr.interactable = true;
+        }
+        if (Player.ResourceCount >= dynPrice && DynamiteDropper.dynamiteCount != dynCap)
+        {
+            dynIncr.interactable = true;
+        }
+
+        resourceTxt.text = "Resource Count: " + Player.ResourceCount;
+
+        switch (choice)
+        {
+            case 0:
+                Player.speedBonus--;
+                break;
+            case 1:
+                Player.healthBonus--;
+                break;
+            case 2:
+                Player.meleeDmgBonus--;
+                break;
+            case 3:
+                Player.bulletDmgBonus--;
+                break;
+            case 4:
+                Player.fireRateBonus--;
+                break;
+            case 5:
+                Player.poisonBonus--;
+                break;
+            case 6:
+                Player.AoEBonus--;
+                break;
+            case 7:
+                Player.lifeStealBonus--;
+                break;
+            case 8:
+                Player.knockBackBonus--;
+                break;
+            case 9:
+                Player.jugBonus--;
+                break;
+            case 10:
+                Player.glassBonus--;
+                break;
+            case 11:
+                Player.antiGravBonus--;
+                break;
+            case 12:
+                Player.lifeSupportBonus--;
+                break;
+            case 13:
+                Player.richMatsBonus--;
+                break;
+            case 14:
+                Player.armorPierceBonus--;
+                break;
+            case 15:
+                Player.gasLeakBonus--;
+                break;
+            case 16:
+                Player.reflectBonus--;
+                break;
+            case 17:
+                Player.resourceSpdBonus--;
+                break;
+            case 18:
+                Player.rockStealBonus--;
+                break;
+            case 19:
+                Player.rockShatterBonus--;
+                break;
+            case 20:
+                Player.invincBonus--;
                 break;
         }
     }

@@ -1,11 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
+    public static int healthCanCount = 3;
+    public float healthCanPerc = 0.25f;
+    public TextMeshProUGUI canCountTxt;
+    public Button healtCanBtn;
+
     public float lifeStealPerc = 0.1f;
     public float rockStealPerc = 0.2f;
 
@@ -40,6 +46,12 @@ public class PlayerHealth : MonoBehaviour
 
         healthBar.maxValue = health;
         healthBar.value = health;
+
+        canCountTxt.text = healthCanCount.ToString();
+        if (healthCanCount == 0)
+        {
+            healtCanBtn.interactable = false;
+        }
     }
 
     // Update is called once per frame
@@ -47,6 +59,14 @@ public class PlayerHealth : MonoBehaviour
     {
         dmgTime += Time.deltaTime;
         nextExplode += Time.deltaTime;
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            if (healthCanCount > 0)
+            {
+                useHealthCan();
+            }
+        }
+
     }
 
     public void TakeDamage(int dmg)
@@ -133,6 +153,26 @@ public class PlayerHealth : MonoBehaviour
                     Player.ResourceCount--;
                 }
             }
+        }
+        healthBar.value = health;
+    }
+
+    public void useHealthCan()
+    {
+        healthCanCount--;
+        canCountTxt.text = healthCanCount.ToString();
+        int hp = (int)(healthCanPerc * maxHealth);
+        if (health + hp > maxHealth)
+        {
+            health = maxHealth;
+        }
+        else
+        {
+            health += hp;
+        }
+        if (healthCanCount == 0)
+        {
+            healtCanBtn.interactable = false;
         }
         healthBar.value = health;
     }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 //using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -8,6 +9,7 @@ public class MouseSelect : MonoBehaviour
 {
     public NavMeshAgent agent;
     public LayerMask rayMask;
+    public LayerMask rayMaskAttack;
     public Transform player;
     private LineRenderer lineRenderer;
 
@@ -18,6 +20,8 @@ public class MouseSelect : MonoBehaviour
     public Shoot shootScr;
 
     [SerializeField] private GameObject clickMarkerPrefab;
+
+    public Camera miniCam;
 
     // Start is called before the first frame update
     void Start()
@@ -33,31 +37,60 @@ public class MouseSelect : MonoBehaviour
     {
         if (Input.GetMouseButton(1))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 100, rayMask))
+            Ray miniRay = miniCam.ScreenPointToRay(Input.mousePosition);
+            RaycastHit miniHit;
+            if (Physics.Raycast(miniRay, out miniHit, 100, rayMask))
             {
-                if (looking)
-                {
-                    agent.enabled = true;
-                    agent.updateRotation = true;
-                    agent.ResetPath();
-                    looking = false;
-                }
+                //mini.doMiniMap(miniHit);
                 agent.updatePosition = true;
-                agent.SetDestination(hit.point);
+                agent.SetDestination(miniHit.point);
                 Vector3 pos = agent.path.corners[agent.path.corners.Length - 1];
 
                 clickMarkerPrefab.SetActive(true);
                 clickMarkerPrefab.transform.position = pos;
-
             }
+            else
+            {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit, 100, rayMask))
+                {
+                    if (looking)
+                    {
+                        agent.enabled = true;
+                        agent.updateRotation = true;
+
+                        //MAY BE NECESSARY
+                        //agent.ResetPath();
+                        looking = false;
+                    }
+                    agent.updatePosition = true;
+                    agent.SetDestination(hit.point);
+                    Vector3 pos = agent.path.corners[agent.path.corners.Length - 1];
+
+                    clickMarkerPrefab.SetActive(true);
+                    clickMarkerPrefab.transform.position = pos;
+
+                }
+            }
+
         }
+
+        if (Vector3.Distance(agent.destination, player.position) <= 1.05)
+        {
+            clickMarkerPrefab.SetActive(false);
+            lineRenderer.positionCount = 0;
+        }
+        else if (agent.hasPath)
+        {
+            DrawPath();
+        }
+
         if (Input.GetMouseButton(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 100, rayMask))
+            if (Physics.Raycast(ray, out hit, 100, rayMaskAttack))
             {
                 //agent.enabled = false;
                 agent.updateRotation = false;
@@ -76,15 +109,7 @@ public class MouseSelect : MonoBehaviour
             player.rotation = Quaternion.Slerp(player.rotation, lookRotation, Time.deltaTime * rotSpeed);
         }
 
-        if (Vector3.Distance(agent.destination, player.position) <= 1.05)
-        {
-            clickMarkerPrefab.SetActive(false);
-            lineRenderer.positionCount = 0;
-        }
-        else if (agent.hasPath)
-        {
-            DrawPath();
-        }
+
     }
 
     void DrawPath()

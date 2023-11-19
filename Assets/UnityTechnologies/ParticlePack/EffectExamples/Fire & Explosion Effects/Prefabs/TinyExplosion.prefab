@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4487629475653210}
   - component: {fileID: 198942329355805636}
   - component: {fileID: 199509474368905042}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Shockwave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4909,7 +4909,7 @@ GameObject:
   - component: {fileID: 4441266138185142}
   - component: {fileID: 198175801688348628}
   - component: {fileID: 199922078765427110}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: TinyExplosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9845,7 +9845,7 @@ GameObject:
   - component: {fileID: 4683521235247790}
   - component: {fileID: 198814760465859298}
   - component: {fileID: 199900680197929382}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Embers
   m_TagString: Untagged
   m_Icon: {fileID: 0}

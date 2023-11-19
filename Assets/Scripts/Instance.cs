@@ -20,6 +20,7 @@ public class Instance : MonoBehaviour
             {
                 FindObjectOfType<Spawner>().incursionTime = 0;
             }
+            Destroy(this.gameObject);
         }
     }
 }
