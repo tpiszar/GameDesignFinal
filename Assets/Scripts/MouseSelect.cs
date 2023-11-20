@@ -42,6 +42,7 @@ public class MouseSelect : MonoBehaviour
             if (Physics.Raycast(miniRay, out miniHit, 100, rayMask))
             {
                 //mini.doMiniMap(miniHit);
+                print(miniHit.collider.gameObject.name + " mini");
                 agent.updatePosition = true;
                 agent.SetDestination(miniHit.point);
                 Vector3 pos = agent.path.corners[agent.path.corners.Length - 1];
@@ -55,6 +56,7 @@ public class MouseSelect : MonoBehaviour
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit, 100, rayMask))
                 {
+                    print(hit.collider.gameObject.name);
                     if (looking)
                     {
                         agent.enabled = true;

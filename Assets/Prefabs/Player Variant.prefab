@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1912474921321893291}
   - component: {fileID: 7304616915463983127}
   - component: {fileID: 6595274819775827983}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Rings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4863,7 +4863,7 @@ GameObject:
   - component: {fileID: 6428161456348062179}
   - component: {fileID: 4312159027779425036}
   - component: {fileID: 817418582464364975}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9703,7 +9703,7 @@ GameObject:
   - component: {fileID: 7166167852883796664}
   - component: {fileID: 8725586627029386413}
   - component: {fileID: 6470337704359627775}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Embers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14785,7 +14785,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 68a5380cc25de68498fb52f2099db684, type: 2}
     - target: {fileID: 6166261311853844002, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
       propertyPath: AoE
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6166261311853844002, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
       propertyPath: AoEmod
@@ -14897,12 +14897,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7259533771829817570, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
       propertyPath: rayMask.m_Bits
-      value: 115
+      value: 113
       objectReference: {fileID: 0}
     - target: {fileID: 7259533771829817570, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
       propertyPath: clickMarkerPrefab
       value: 
       objectReference: {fileID: 4750959947233171138}
+    - target: {fileID: 7259533771829817570, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
+      propertyPath: rayMaskAttack.m_Bits
+      value: 51
+      objectReference: {fileID: 0}
     - target: {fileID: 7397257609491649926, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -14992,6 +14996,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 385597576314167868, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3471646390552853512}
+    - targetCorrespondingSourceObject: {fileID: 385597576314167868, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3044574006873148100}
     - targetCorrespondingSourceObject: {fileID: 5846063136167135752, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}
       insertIndex: -1
       addedObject: {fileID: 553322200323830127}
@@ -15382,6 +15389,21 @@ MonoBehaviour:
   timer: 0
   oneTime: 1
   particles: 1
+--- !u!114 &3044574006873148100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5542872150530248882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3447823f18e6811408cedbb44245b78e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dynCountTxt: {fileID: 0}
+  dynBtn: {fileID: 0}
+  dynamite: {fileID: 1800890921480779250, guid: 4412a4f165d5908468c69b15fe252f8b, type: 3}
 --- !u!1 &5583376782410857980 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 345076998293737330, guid: ea3a4060f0f6ca943b35bfd88047ad81, type: 3}

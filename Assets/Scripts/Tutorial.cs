@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Tutorial : MonoBehaviour
 {
@@ -24,9 +25,30 @@ public class Tutorial : MonoBehaviour
 
     public GameObject[] enemies;
 
+    public PlayerHealth health;
+
+    public GameObject[] instructions;
+
+    bool healthCan = true;
+    public TextMeshProUGUI canCount;
+    public TextMeshProUGUI dynCount;
+    public Button canBtn;
+    public Button dynBtn;
+
+    public GameObject miniMap;
+
+    float dynTime = 0;
+
     // Start is called before the first frame update
     void Start()
     {
+        PlayerHealth.healthCanCount = 0;
+        DynamiteDropper.dynamiteCount = 0;
+        canCount.text = "0";
+        dynCount.text = "0";
+        canBtn.enabled = false;
+        dynBtn.enabled = false;
+
         for (int i = 0; i < transform.childCount; i++)
         {
             transform.GetChild(i).gameObject.SetActive(true);
@@ -36,26 +58,58 @@ public class Tutorial : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (stage == 0 && Input.GetMouseButtonDown(1))
+
+        if (health.health <= 10)
         {
-            directTxt.text = "Left Click to Attack in Mouse Direction. Breaking Materials Gives You Resources That Can Be Used to Buy Upgardes After Each World. Break Through the Materials to Proceed.";
-            stage++;
+            health.health = health.maxHealth;
         }
-        else if (stage == 2 && transform.childCount == 4)
+        if (healthCan && health.maxHealth - health.health >= 30)
         {
-            directTxt.text = "Scroll the Mouse Wheel or Press 2 to switch to your gun. Hold Left Click and Shoot the Enemy.";
+            //Health canister
+            instructions[3].SetActive(true);
+            timerTxt.enabled = false;
+            Time.timeScale = 0f;
+            canCount.text = "3";
+            canBtn.interactable = true;
+            PlayerHealth.healthCanCount = 3;
+            healthCan = false;
+        }
+
+        if (stage == 0 && Time.time > 3)
+        {
+            instructions[0].SetActive(true);
+            timerTxt.enabled = false;
+            timerTxt.text = "Continue Forward.";
+            Time.timeScale = 0f;
             stage++;
         }
         else if (stage == 3 && transform.childCount == 3)
         {
-            directTxt.text = "Melee or Shoot the Enemies to Defeat Them.";
+            timerTxt.text = "Defeat the Enemies to Continue.";
             Destroy(wall);
             stage++;
         }
-        else if (stage == 4 && transform.childCount == 0)
+        else if (stage == 4)
         {
-            directTxt.text = "Each World Has an Incursion Timer. When it Reaches 0 a Portal Opens and Enemies Begin Rapidly Spawning.";
-            stage++;
+            //Dynamite
+            dynTime += Time.deltaTime;
+            if (dynBtn.interactable == false && dynTime > 3)
+            {
+                instructions[4].SetActive(true);
+                timerTxt.enabled = false;
+                Time.timeScale = 0f;
+                dynCount.text = "3";
+                dynBtn.interactable = true;
+                DynamiteDropper.dynamiteCount = 3;
+            }
+            //Timer and Incursion
+            if (transform.childCount == 0)
+            {
+                stage++;
+                instructions[5].SetActive(true);
+                timerTxt.enabled = false;
+                Time.timeScale = 0f;
+            }
         }
         else if (stage == 5)
         {
@@ -78,6 +132,7 @@ public class Tutorial : MonoBehaviour
                 port.transform.Rotate(new Vector3(-90, 0, 0));
                 Portal portScr = port.GetComponent<Portal>();
                 portScr.endCam = endCam;
+                portScr.miniMap = miniMap;
                 portScr.mainUI = mainUI;
                 portScr.victUI = victUI;
                 stage++;
@@ -90,15 +145,91 @@ public class Tutorial : MonoBehaviour
                 spawnWave();
             }
         }
+
+
+
+        //if (stage == 0 && Input.GetMouseButtonDown(1))
+        //{
+        //    directTxt.text = "Left Click to Attack in Mouse Direction. Breaking Materials Gives You Resources That Can Be Used to Buy Upgardes After Each World. Break Through the Materials to Proceed.";
+        //    stage++;
+        //}
+        //else if (stage == 2 && transform.childCount == 4)
+        //{
+        //    directTxt.text = "Scroll the Mouse Wheel or Press 2 to switch to your gun. Hold Left Click and Shoot the Enemy.";
+        //    stage++;
+        //}
+        //else if (stage == 3 && transform.childCount == 3)
+        //{
+        //    directTxt.text = "Melee or Shoot the Enemies to Defeat Them.";
+        //    Destroy(wall);
+        //    stage++;
+        //}
+        //else if (stage == 4 && transform.childCount == 0)
+        //{
+        //    directTxt.text = "Each World Has an Incursion Timer. When it Reaches 0 a Portal Opens and Enemies Begin Rapidly Spawning.";
+        //    stage++;
+        //}
+        //else if (stage == 5)
+        //{
+        //    timer -= Time.deltaTime;
+        //    float minutes = Mathf.FloorToInt(timer / 60);
+        //    float seconds = Mathf.FloorToInt(timer % 60);
+        //    if (seconds < 10)
+        //    {
+        //        timerTxt.text = minutes + ":0" + seconds;
+        //    }
+        //    else
+        //    {
+        //        timerTxt.text = minutes + ":" + seconds;
+        //    }
+
+        //    if (timer <= 0)
+        //    {
+        //        timerTxt.text = "Reach the Portal and Escape!";
+        //        GameObject port = Instantiate(portal, new Vector3(0, 2, 0), Quaternion.identity);
+        //        port.transform.Rotate(new Vector3(-90, 0, 0));
+        //        Portal portScr = port.GetComponent<Portal>();
+        //        portScr.endCam = endCam;
+        //        portScr.mainUI = mainUI;
+        //        portScr.victUI = victUI;
+        //        stage++;
+        //    }
+        //}
+        //else
+        //{
+        //    if (transform.childCount == 0)
+        //    {
+        //        spawnWave();
+        //    }
+        //}
     }
 
     public void wallTrigger()
     {
+        //if (stage == 1)
+        //{
+        //    directTxt.text = "Melee the enemy to kill it. Melee attacks knock back and stun enemies prventing attacks for a short time.";
+        //}
+        //stage++;
+
         if (stage == 1)
         {
-            directTxt.text = "Melee the enemy to kill it. Melee attacks knock back and stun enemies prventing attacks for a short time.";
+            //Materials
+            instructions[1].SetActive(true);
+            timerTxt.enabled = false;
+            Time.timeScale = 0f;
+            timerTxt.text = "Mine Through the Materials to Continue.";
+            stage++;
         }
-        stage++;
+        else if (stage == 2)
+        {
+            //Weapons
+            instructions[2].SetActive(true);
+            timerTxt.enabled = false;
+            Time.timeScale = 0f;
+            timerTxt.text = "Melee the Close Enemy and Shoot the Far One.";
+            stage++;
+        }
     }
 
     void spawnWave()
@@ -118,5 +249,13 @@ public class Tutorial : MonoBehaviour
         GameObject newEn = Instantiate(enemies[type], spawns[pos].position, Quaternion.identity);
 
         newEn.transform.parent = transform;
+    }
+
+    public void Next(int instr)
+    {
+        mainUI.SetActive(true);
+        instructions[instr].SetActive(false);
+        timerTxt.enabled = true;
+        Time.timeScale = 1f;
     }
 }
