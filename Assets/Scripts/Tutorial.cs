@@ -37,7 +37,9 @@ public class Tutorial : MonoBehaviour
 
     public GameObject miniMap;
 
+    float startTime = 0;
     float dynTime = 0;
+    bool dynDone = false;
 
     // Start is called before the first frame update
     void Start()
@@ -46,8 +48,8 @@ public class Tutorial : MonoBehaviour
         DynamiteDropper.dynamiteCount = 0;
         canCount.text = "0";
         dynCount.text = "0";
-        canBtn.enabled = false;
-        dynBtn.enabled = false;
+        canBtn.interactable = false;
+        dynBtn.interactable = false;
 
         for (int i = 0; i < transform.childCount; i++)
         {
@@ -75,13 +77,17 @@ public class Tutorial : MonoBehaviour
             healthCan = false;
         }
 
-        if (stage == 0 && Time.time > 3)
+        if (stage == 0)
         {
-            instructions[0].SetActive(true);
-            timerTxt.enabled = false;
-            timerTxt.text = "Continue Forward.";
-            Time.timeScale = 0f;
-            stage++;
+            startTime += Time.deltaTime;
+            if (startTime > 3)
+            {
+                instructions[0].SetActive(true);
+                timerTxt.enabled = false;
+                timerTxt.text = "Continue Forward.";
+                Time.timeScale = 0f;
+                stage++;
+            }
         }
         else if (stage == 3 && transform.childCount == 3)
         {
@@ -93,8 +99,9 @@ public class Tutorial : MonoBehaviour
         {
             //Dynamite
             dynTime += Time.deltaTime;
-            if (dynBtn.interactable == false && dynTime > 3)
+            if (!dynDone && dynTime > 3)
             {
+                dynDone = true;
                 instructions[4].SetActive(true);
                 timerTxt.enabled = false;
                 Time.timeScale = 0f;
