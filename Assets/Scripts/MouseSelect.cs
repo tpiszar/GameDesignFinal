@@ -23,6 +23,8 @@ public class MouseSelect : MonoBehaviour
 
     public Camera miniCam;
 
+    float distance;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +32,8 @@ public class MouseSelect : MonoBehaviour
         lineRenderer.startWidth = 0.15f;
         lineRenderer.endWidth = 0.15f;
         lineRenderer.positionCount = 0;
+
+        distance = player.transform.localScale.x + 0.05f;
     }
 
     // Update is called once per frame
@@ -76,7 +80,7 @@ public class MouseSelect : MonoBehaviour
 
         }
 
-        if (Vector3.Distance(agent.destination, player.position) <= 1.05)
+        if (Vector3.Distance(agent.destination, player.position) <= distance)
         {
             clickMarkerPrefab.SetActive(false);
             lineRenderer.positionCount = 0;
