@@ -44,7 +44,7 @@ public class FlyingEnemy : MonoBehaviour
 
     void Start()
     {
-        player = Spawner.player;
+        //player = Spawner.player;
         agent = GetComponent<NavMeshAgent>();
         agent.SetDestination(player.transform.position);
         baseSpeed = agent.speed;
@@ -145,7 +145,7 @@ public class FlyingEnemy : MonoBehaviour
             agent.speed = baseSpeed;
             agent.SetDestination(returnPos);
 
-            player.GetComponent<PlayerHealth>().TakeDamage(attkDmg);
+            player.GetComponentInParent<PlayerHealth>().TakeDamage(attkDmg);
         }
     }
 

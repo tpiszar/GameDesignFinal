@@ -41,8 +41,8 @@ public class PlayerHealth : MonoBehaviour
         Spawner.player = transform;
         health = maxHealth;
 
-        mr = GetComponent<MeshRenderer>();
-        mat = mr.material;
+        //mr = GetComponent<MeshRenderer>();
+        //mat = mr.material;
 
         healthBar.maxValue = health;
         healthBar.value = health;
@@ -179,8 +179,8 @@ public class PlayerHealth : MonoBehaviour
 
     IEnumerator dmgFlash()
     {
-        mr.material = dmgMat;
+        //mr.material = dmgMat;
         yield return new WaitForSeconds(dmgCooldown);// dmgFlashTime);
-        mr.material = mat;
+        //mr.material = mat;
     }
 }

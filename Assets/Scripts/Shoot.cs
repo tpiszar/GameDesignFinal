@@ -28,10 +28,18 @@ public class Shoot : MonoBehaviour
 
     public int armorPiercing = 0;
 
+    public Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
+        Invoke("delayedStart", 0.25f);
+    }
 
+    void delayedStart()
+    {
+        animator.SetFloat("FireRate", (fireRate / 5f) * animator.GetFloat("InverseSpeed"));
+;
     }
 
     // Update is called once per frame
@@ -63,6 +71,8 @@ public class Shoot : MonoBehaviour
             Destroy(newBullet, 10f);
 
             nextTimeToFire = Time.time + 1f / fireRate;
+
+            animator.SetTrigger("Shoot");
         }
     }
 }

@@ -10,6 +10,8 @@ public class WeaponSwap : MonoBehaviour
     public GameObject pick;
     public bool start;
 
+    public Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +21,7 @@ public class WeaponSwap : MonoBehaviour
             gun.SetActive(false);
             melee.enabled = true;
             pick.SetActive(true);
+            animator.SetBool("Pick", true);
         }
         else
         {
@@ -26,6 +29,7 @@ public class WeaponSwap : MonoBehaviour
             gun.SetActive(true);
             melee.enabled = false;
             pick.SetActive(false);
+            animator.SetBool("Pick", false);
         }
     }
 
@@ -41,6 +45,7 @@ public class WeaponSwap : MonoBehaviour
                 gun.SetActive(false);
                 melee.enabled = true;
                 pick.SetActive(true);
+                animator.SetBool("Pick", true);
             }
             else
             {
@@ -48,6 +53,7 @@ public class WeaponSwap : MonoBehaviour
                 gun.SetActive(true);
                 melee.enabled = false;
                 pick.SetActive(false);
+                animator.SetBool("Pick", false);
             }
         }
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -57,6 +63,7 @@ public class WeaponSwap : MonoBehaviour
             gun.SetActive(false);
             melee.enabled = true;
             pick.SetActive(true);
+            animator.SetBool("Pick", true);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
@@ -65,6 +72,7 @@ public class WeaponSwap : MonoBehaviour
             gun.SetActive(true);
             melee.enabled = false;
             pick.SetActive(false);
+            animator.SetBool("Pick", false);
         }
     }
 }

@@ -10,51 +10,21 @@ public class Movement : MonoBehaviour
 
     public NavMeshAgent agent;
 
-    public Shoot shoot;
-
-    float nextTimeToFire = 0;
-    public float fireRate = 4f;
-    float nextMelee = 0;
-
-    bool m = true;
-
     // Start is called before the first frame update
     void Start()
     {
-        
+        Invoke("delayedStart", 0.2f);
+    }
+
+    void delayedStart()
+    {
+        animator.speed = agent.speed / 6;
+        animator.SetFloat("InverseSpeed", 1 / (agent.speed / 6));
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            m = true;
-            animator.SetBool("Pick", true);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            m = false;
-            animator.SetBool("Pick", false);
-        }
-        if (m)
-        {
-            if (Input.GetMouseButtonDown(0) && Time.time >= nextMelee)
-            {
-                animator.SetTrigger("Melee");
-                nextMelee = Time.time + 1f;
-            }
-        }
-        else
-        {
-            if (Input.GetMouseButton(0) && Time.time >= nextTimeToFire)
-            {
-                animator.SetTrigger("Shoot");
-                nextTimeToFire = Time.time + 1f / fireRate;
-                animator.SetFloat("FireRate", fireRate / 5f);
-            }
-        }
-
         Vector3 pos = player.position;
         pos.y = 0;
         transform.position = pos;
@@ -92,6 +62,5 @@ public class Movement : MonoBehaviour
 
         animator.SetFloat("X", x);
         animator.SetFloat("Y", y);
-        animator.speed = agent.speed / 6;
     }
 }

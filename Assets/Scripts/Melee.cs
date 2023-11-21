@@ -6,35 +6,42 @@ using UnityEngine;
 public class Melee : MonoBehaviour
 {
     public float range = 100f;
-    public float attkRate;
-    float nextAttk = 0;
-    Collider collide;
+    public Collider collide;
 
     public float impact;
     public int meleeDmg;
 
-    public Animation attkAnim;
-
     List<Collider> hits = new List<Collider>();
+
+    bool next = true;
+
+    public Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
-        collide = GetComponent<Collider>();
+        //collide = GetComponent<Collider>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        nextAttk += Time.deltaTime;
-        if (Input.GetMouseButtonDown(0) && nextAttk >= attkRate)
+        if (Input.GetMouseButtonDown(0) && next)
         {
+            next = false;
             hits.Clear();
-            collide.enabled = true;
-            nextAttk = 0;
-            attkAnim.Play();
-            Invoke("disableCollider", attkRate);
+            animator.SetTrigger("Melee");
         }
+    }
+
+    public void NextAttk()
+    {
+        next = true;
+    }
+
+    void enableCollider()
+    {
+        collide.enabled = true;
     }
 
     void disableCollider()
@@ -44,7 +51,7 @@ public class Melee : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (hits.Contains(other))
+        if (other.gameObject.layer == 3 || hits.Contains(other))
         {
             return;
         }
