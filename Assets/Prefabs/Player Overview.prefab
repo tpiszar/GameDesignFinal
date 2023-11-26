@@ -6205,6 +6205,7 @@ MonoBehaviour:
   player: {fileID: 4901316348150407647}
   agent: {fileID: 1735020032918087426}
   difference: 1
+  baseSpeed: 6
 --- !u!114 &730587303558238827
 MonoBehaviour:
   m_ObjectHideFlags: 0

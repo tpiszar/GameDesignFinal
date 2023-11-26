@@ -55,6 +55,7 @@ public class GroundEnemy : MonoBehaviour
     public GameObject deathEff;
 
     public Animator animator;
+    public Transform Mesh;
 
     // Start is called before the first frame update
     void Start()
@@ -66,20 +67,26 @@ public class GroundEnemy : MonoBehaviour
 
         rig = GetComponentInChildren<Rigidbody>();
 
-        healthBar.maxValue = health;
-        healthBar.value = health;
+
         canvas.enabled = false;
 
         poisonEffs = GetComponentsInChildren<SpawnEffect>();
 
-        maxHealth = health;
+
 
         Invoke("delayedStart", 0.25f);
     }
 
     void delayedStart()
     {
+        maxHealth = health;
+
+        healthBar.maxValue = health;
+        healthBar.value = health;
+
         animator.SetFloat("FireRate", (fireRate / 5f) * animator.GetFloat("InverseSpeed"));
+        animator.speed = agent.speed / 3.5f;
+
     }
 
     // Update is called once per frame
@@ -278,7 +285,15 @@ public class GroundEnemy : MonoBehaviour
             {
                 if (!poisoned)
                 {
-                    Instantiate(deathEff, transform.position, Quaternion.identity);
+                    //Instantiate(deathEff, transform.position, Quaternion.identity);
+                    animator.SetBool("Dead", true);
+                    Mesh.parent = null;
+                    Collider[] cols = GetComponentsInChildren<Collider>();
+                    foreach (Collider col in cols)
+                    {
+                        col.enabled = false;
+                    }
+                    Destroy(Mesh.GetComponent<Movement>());
                 }
 
                 if (Player.lifeStealBonus != 0)

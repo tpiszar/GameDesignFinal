@@ -12,6 +12,8 @@ public class Movement : MonoBehaviour
 
     public float difference;
 
+    public float baseSpeed;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +23,7 @@ public class Movement : MonoBehaviour
     void delayedStart()
     {
         animator.speed = agent.speed / 6;
-        animator.SetFloat("InverseSpeed", 1 / (agent.speed / 6));
+        animator.SetFloat("InverseSpeed", 1 / (agent.speed / baseSpeed));
     }
 
     // Update is called once per frame

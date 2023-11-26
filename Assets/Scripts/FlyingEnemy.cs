@@ -43,6 +43,9 @@ public class FlyingEnemy : MonoBehaviour
 
     public float rotationSpeed;
 
+    public Animator animator;
+    public Transform Mesh;
+
     // Start is called before the first frame update
 
     void Start()
@@ -50,20 +53,32 @@ public class FlyingEnemy : MonoBehaviour
         player = Spawner.player;
         agent = GetComponent<NavMeshAgent>();
         agent.SetDestination(player.transform.position);
-        baseSpeed = agent.speed;
+
         baseAccel = agent.acceleration;
         baseAng = agent.angularSpeed;
         rig = GetComponent<Rigidbody>();
 
-        healthBar.maxValue = health;
-        healthBar.value = health;
+
         canvas.enabled = false;
 
         poisonEffs = GetComponentsInChildren<SpawnEffect>();
 
-        maxHealth = health;
+
 
         agent.updateRotation = false;
+
+        Invoke("delayedStart", 0.25f);
+    }
+
+    void delayedStart()
+    {
+        baseSpeed = agent.speed;
+        maxHealth = health;
+
+        healthBar.maxValue = health;
+        healthBar.value = health;
+
+        animator.speed = baseSpeed / 3.5f;
     }
 
     // Update is called once per frame
@@ -200,7 +215,10 @@ public class FlyingEnemy : MonoBehaviour
         {
             if (!poisoned)
             {
-                Instantiate(deathEff, transform.position, Quaternion.identity);
+                //Instantiate(deathEff, transform.position, Quaternion.identity);
+                //animator.Play("FlyDeath2");
+                animator.SetTrigger("Dead");
+                Mesh.parent = null;
             }
 
             if (Player.lifeStealBonus != 0)

@@ -14955,6 +14955,7 @@ MonoBehaviour:
   knockBackEff: {fileID: 7802372230250854237}
   deathEff: {fileID: 5806292856958928881, guid: efa3e6a520be81d4ba89dbf6ff9d3c4f, type: 3}
   animator: {fileID: 1780610267547814530}
+  Mesh: {fileID: 8027438341779022099}
   health: 70
   maxHealth: 0
   dmgCooldown: 0.1
@@ -20602,6 +20603,7 @@ MonoBehaviour:
   player: {fileID: 2445150102650391219}
   agent: {fileID: 7590030251186692055}
   difference: 0.77
+  baseSpeed: 3.5
 --- !u!4 &8027438341779022099 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8924198713221366836, guid: 8d9f4127ede70bd4cbd494fa0fc6ab19, type: 3}

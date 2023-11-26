@@ -35,6 +35,9 @@ public class PlayerHealth : MonoBehaviour
 
     public GameObject explosion;
 
+    public Animator animator;
+    public Transform mesh;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -118,6 +121,10 @@ public class PlayerHealth : MonoBehaviour
                 {
                     GetComponentInParent<Player>().Dead();
                     Destroy(gameObject);
+                    //animator.SetBool("Dead", true);
+                    //mesh.parent = null;
+                    //mesh.GetComponent<Movement>().enabled = false;
+                    //mesh.GetComponent<Melee>().enabled = false;
                 }
             }
             healthBar.value = health;

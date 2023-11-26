@@ -63,8 +63,6 @@ public class Rock : MonoBehaviour
         particleHit.Play();
         if (health <= 0)
         {
-            GameObject brek = Instantiate(particleBreak, transform.position, Quaternion.identity);
-            brek.transform.Rotate(new Vector3(-90, 0, 0));
 
             Player.ResourceCount += resource + (1 * Player.richMatsBonus);
             if (Player.resourceSpdBonus > 0 )
@@ -101,6 +99,11 @@ public class Rock : MonoBehaviour
                         }
                     }
                 }
+            }
+            else
+            {
+                GameObject brek = Instantiate(particleBreak, transform.position, Quaternion.identity);
+                brek.transform.Rotate(new Vector3(-90, 0, 0));
             }
             
             Destroy(gameObject);
