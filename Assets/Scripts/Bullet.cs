@@ -69,27 +69,6 @@ public class Bullet : MonoBehaviour
         {
             return;
         }
-        if (other.gameObject.layer != 7)
-        {
-            MeshRenderer mesh = other.gameObject.GetComponent<MeshRenderer>();
-            if (!mesh)
-            {
-                mesh = other.gameObject.GetComponentInChildren<MeshRenderer>();
-            }
-            if (mesh)
-            {
-                GameObject hitEffect = Instantiate(particleHit, transform.position - transform.up * 0.15f, Quaternion.identity);
-                hitEffect.transform.parent = other.transform;
-                var main = hitEffect.GetComponent<ParticleSystem>().main;
-                ParticleSystem[] systems = hitEffect.GetComponentsInChildren<ParticleSystem>();
-                main.startColor = mesh.material.color;
-                foreach (ParticleSystem s in systems)
-                {
-                    var sMain = s.main;
-                    sMain.startColor = mesh.material.color;
-                }
-            }
-        }
 
         if (shotBy == shooter.player)
         {
@@ -118,6 +97,7 @@ public class Bullet : MonoBehaviour
                 {
                     armorPiercing--;
                 }
+                SpawnHit(other.gameObject);
             }
         }
         else
@@ -195,29 +175,67 @@ public class Bullet : MonoBehaviour
     }
     void HitPlayer(Collider other)
     {
-        PlayerHealth player = other.gameObject.GetComponent<PlayerHealth>();
-        if (player)
+        if (other.gameObject.layer != 6)
         {
-            if (Player.reflectBonus != 0)
+            PlayerHealth player = other.gameObject.GetComponentInParent<PlayerHealth>();
+            if (player)
             {
-                float baseChance = other.transform.parent.GetComponent<Player>().reflectPerc;
-                float chance = baseChance;
-                for (int i = 1; i < Player.reflectBonus; i++)
+                if (Player.reflectBonus != 0)
                 {
-                    chance += baseChance / Mathf.Pow(2, Player.reflectBonus - 1);
+                    float baseChance = other.transform.parent.GetComponent<Player>().reflectPerc;
+                    float chance = baseChance;
+                    for (int i = 1; i < Player.reflectBonus; i++)
+                    {
+                        chance += baseChance / Mathf.Pow(2, Player.reflectBonus - 1);
+                    }
+                    if (Random.value < chance)
+                    {
+                        GetComponent<Rigidbody>().AddForce(GetComponent<Rigidbody>().velocity * -2, ForceMode.Impulse);
+                        shotBy = shooter.player;
+                        return;
+                    }
                 }
-                if (Random.value < chance)
+                else
                 {
-                    GetComponent<Rigidbody>().AddForce(GetComponent<Rigidbody>().velocity * -2, ForceMode.Impulse);
-                    shotBy = shooter.player;
-                    return;
+                    SpawnHit(other.gameObject);
+                    Destroy(this.gameObject);
                 }
+                player.TakeDamage(damage);
             }
-            player.TakeDamage(damage);
         }
         if (other.gameObject.layer != 6 && other.gameObject.layer != 7)
         {
+            SpawnHit(other.gameObject);
             Destroy(this.gameObject);
         }
+    }
+
+    void SpawnHit(GameObject hit)
+    {
+        GameObject hitEffect = Instantiate(particleHit, transform.position - transform.up * 0.15f, Quaternion.identity);
+        //hitEffect.transform.parent = hit.transform;
+
+        //MeshRenderer mesh = hit.GetComponent<MeshRenderer>();
+        //if (!mesh)
+        //{
+        //    mesh = hit.GetComponentInChildren<MeshRenderer>();
+        //}
+        //if (!mesh)
+        //{
+        //    mesh = hit.GetComponentInParent<MeshRenderer>();
+        //}
+        //if (mesh)
+        //{
+        //    GameObject hitEffect = Instantiate(particleHit, transform.position - transform.up * 0.15f, Quaternion.identity);
+        //    hitEffect.transform.parent = hit.transform;
+        //    var main = hitEffect.GetComponent<ParticleSystem>().main;
+        //    ParticleSystem[] systems = hitEffect.GetComponentsInChildren<ParticleSystem>();
+        //    main.startColor = mesh.material.color;
+        //    foreach (ParticleSystem s in systems)
+        //    {
+        //        var sMain = s.main;
+        //        sMain.startColor = mesh.material.color;
+        //    }
+        //}
     }
 }

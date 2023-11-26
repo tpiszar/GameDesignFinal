@@ -7,8 +7,7 @@ using UnityEngine.AI;
 public class GroundEnemy : MonoBehaviour
 {
     public Transform body;
-    public Transform head;
-    public Transform gun;
+    //public Transform gun;
     public float rotationSpeed;
     public float gunRotMag;
 
@@ -55,12 +54,16 @@ public class GroundEnemy : MonoBehaviour
     public ParticleSystem knockBackEff;
     public GameObject deathEff;
 
+    public Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
         currentState = state.following;
         agent.updateRotation = false;
+        
         target = Spawner.player;
+
         rig = GetComponentInChildren<Rigidbody>();
 
         healthBar.maxValue = health;
@@ -70,11 +73,20 @@ public class GroundEnemy : MonoBehaviour
         poisonEffs = GetComponentsInChildren<SpawnEffect>();
 
         maxHealth = health;
+
+        Invoke("delayedStart", 0.25f);
+    }
+
+    void delayedStart()
+    {
+        animator.SetFloat("FireRate", (fireRate / 5f) * animator.GetFloat("InverseSpeed"));
     }
 
     // Update is called once per frame
     void Update()
     {
+        dmgTime += Time.deltaTime;
+
         if (poisoned)
         {
             nextPoison += Time.deltaTime;
@@ -156,7 +168,8 @@ public class GroundEnemy : MonoBehaviour
 
         Vector3 bodyDir = bodyLookPoint - body.position;
         //Vector3 headDir = target.position - head.position;
-        Vector3 gunDir = target.position - gun.position;
+        
+        //Vector3 gunDir = target.position - gun.position;
 
         Quaternion bodyRot = Quaternion.LookRotation(bodyDir.normalized);
         body.rotation = Quaternion.Slerp(body.rotation, bodyRot, rotationSpeed * Time.deltaTime);
@@ -164,7 +177,7 @@ public class GroundEnemy : MonoBehaviour
 
         if (Mathf.Abs(body.rotation.eulerAngles.magnitude - bodyRot.eulerAngles.magnitude) < gunRotMag)
         {
-            gun.rotation = Quaternion.Slerp(gun.rotation, Quaternion.LookRotation(gunDir.normalized), rotationSpeed * Time.deltaTime);
+            //gun.rotation = Quaternion.Slerp(gun.rotation, Quaternion.LookRotation(gunDir.normalized), rotationSpeed * Time.deltaTime);
 
             if (Time.time >= nextTimeToFire)
             {
@@ -172,9 +185,10 @@ public class GroundEnemy : MonoBehaviour
             }
         }
 
-        Vector3 gunRot = gun.localEulerAngles;
-        gunRot.z = 0;
-        gun.localEulerAngles = gunRot;
+        //Vector3 gunRot = gun.localEulerAngles;
+        //gunRot.z = 0;
+        //gun.localEulerAngles = gunRot;
+
         //Vector3 headRot = head.localEulerAngles;
         //headRot.y = 0;
         //headRot.z = 0;
@@ -205,14 +219,15 @@ public class GroundEnemy : MonoBehaviour
 
         Vector3 bodyDir = bodyLookPoint - body.position;
         //Vector3 headDir = target.position - head.position;
-        Vector3 gunDir = target.position - gun.position;
+        
+        //Vector3 gunDir = target.position - gun.position;
 
         Quaternion bodyRot = Quaternion.LookRotation(bodyDir.normalized);
         body.rotation = Quaternion.Slerp(body.rotation, bodyRot, rotationSpeed * Time.deltaTime);
 
         if (Mathf.Abs(body.rotation.eulerAngles.magnitude - bodyRot.eulerAngles.magnitude) < gunRotMag)
         {
-            gun.rotation = Quaternion.Slerp(gun.rotation, Quaternion.LookRotation(gunDir.normalized), rotationSpeed * Time.deltaTime);
+            //gun.rotation = Quaternion.Slerp(gun.rotation, Quaternion.LookRotation(gunDir.normalized), rotationSpeed * Time.deltaTime);
 
             if (Time.time >= nextTimeToFire)
             {
@@ -221,9 +236,9 @@ public class GroundEnemy : MonoBehaviour
             }
         }
 
-        Vector3 gunRot = gun.localEulerAngles;
-        gunRot.z = 0;
-        gun.localEulerAngles = gunRot;
+        //Vector3 gunRot = gun.localEulerAngles;
+        //gunRot.z = 0;
+        //gun.localEulerAngles = gunRot;
     }
 
     void Shoot()
@@ -236,32 +251,42 @@ public class GroundEnemy : MonoBehaviour
         newBullet.transform.forward = dir.normalized;
         newBullet.transform.Rotate(new Vector3(90, 0, 0));
         Destroy(newBullet, 10f);
+
+        animator.SetTrigger("Shoot");
     }
 
     public int health = 100;
     public int maxHealth;
 
+    public float dmgCooldown;
+    float dmgTime = 0;
+
     public void TakeDamage(int amount)
     {
-        if (health == maxHealth)
+        if (dmgTime > dmgCooldown)
         {
-            canvas.enabled = true;
-        }
+            dmgTime = 0;
 
-        health -= amount;
-        healthBar.value = health;
-        if (health <= 0)
-        {
-            if (!poisoned)
+            if (health == maxHealth)
             {
-                Instantiate(deathEff, transform.position, Quaternion.identity);
+                canvas.enabled = true;
             }
 
-            if (Player.lifeStealBonus != 0)
+            health -= amount;
+            healthBar.value = health;
+            if (health <= 0)
             {
-                FindObjectOfType<PlayerHealth>().GainHealth(0);
+                if (!poisoned)
+                {
+                    Instantiate(deathEff, transform.position, Quaternion.identity);
+                }
+
+                if (Player.lifeStealBonus != 0)
+                {
+                    FindObjectOfType<PlayerHealth>().GainHealth(0);
+                }
+                Destroy(this.gameObject);
             }
-            Destroy(this.gameObject);
         }
     }
 

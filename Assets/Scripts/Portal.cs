@@ -18,6 +18,8 @@ public class Portal : MonoBehaviour
     public Light lit;
     public float intensity;
 
+    public Transform player;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,9 +41,9 @@ public class Portal : MonoBehaviour
     {
         if (other.gameObject.GetComponentInParent<Player>())
         {
-            other.gameObject.GetComponent<NavMeshAgent>().enabled = false;
-            other.transform.position = new Vector3(0, -100, 0);
-            Destroy(other.transform.parent.GetComponentInChildren<Camera>().gameObject);
+            player.gameObject.GetComponent<NavMeshAgent>().enabled = false;
+            player.transform.position = new Vector3(0, -100, 0);
+            Destroy(player.parent.GetComponentInChildren<Camera>().gameObject);
             endCam.SetActive(true);
             miniMap.SetActive(false);
             mainUI.SetActive(false);

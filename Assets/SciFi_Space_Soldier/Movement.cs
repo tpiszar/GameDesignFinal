@@ -10,6 +10,8 @@ public class Movement : MonoBehaviour
 
     public NavMeshAgent agent;
 
+    public float difference;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +28,7 @@ public class Movement : MonoBehaviour
     void Update()
     {
         Vector3 pos = player.position;
-        pos.y = 0;
+        pos.y -= difference;
         transform.position = pos;
 
         float x = 0;

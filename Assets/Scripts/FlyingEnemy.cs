@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AI;
+using static UnityEngine.GraphicsBuffer;
 
 public class FlyingEnemy : MonoBehaviour
 {
@@ -40,11 +41,13 @@ public class FlyingEnemy : MonoBehaviour
 
     public GameObject deathEff;
 
+    public float rotationSpeed;
+
     // Start is called before the first frame update
 
     void Start()
     {
-        //player = Spawner.player;
+        player = Spawner.player;
         agent = GetComponent<NavMeshAgent>();
         agent.SetDestination(player.transform.position);
         baseSpeed = agent.speed;
@@ -59,11 +62,16 @@ public class FlyingEnemy : MonoBehaviour
         poisonEffs = GetComponentsInChildren<SpawnEffect>();
 
         maxHealth = health;
+
+        agent.updateRotation = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        bool moving = false;
+        bool looking = true;
+
         if (poisoned)
         {
             nextPoison += Time.deltaTime;
@@ -76,6 +84,7 @@ public class FlyingEnemy : MonoBehaviour
 
         if (knocked)
         {
+            looking = false;
             if (rig.velocity.magnitude < 0.001f)
             {
                 stunned -= Time.deltaTime;
@@ -85,7 +94,7 @@ public class FlyingEnemy : MonoBehaviour
                     agent.acceleration = baseAng;
                     agent.angularSpeed = baseAng;
                     agent.speed = baseSpeed;
-                    agent.updateRotation = true;
+                    //agent.updateRotation = true;
                     knocked = false;
                     nextAttk = 0;
                 }
@@ -102,7 +111,7 @@ public class FlyingEnemy : MonoBehaviour
                 nextAttk = 0;
                 agent.SetDestination(player.transform.position);
                 agent.angularSpeed = 1000;
-                agent.updateRotation = true;
+                //agent.updateRotation = true;
                 agent.acceleration = baseAng;
                 agent.angularSpeed = baseAng;
                 returning = false;
@@ -110,6 +119,9 @@ public class FlyingEnemy : MonoBehaviour
         }
         else
         {
+
+
+
             nextAttk += Time.deltaTime;
             if ((transform.position - player.transform.position).magnitude < attkDist)
             {
@@ -125,13 +137,36 @@ public class FlyingEnemy : MonoBehaviour
                 else
                 {
                     agent.isStopped = true;
+
                 }
             }
             else
             {
                 agent.isStopped = false;
                 agent.SetDestination(player.transform.position);
+
+                if (agent.path.corners.Length > 1)
+                {
+                    moving = true;
+
+
+                }
             }
+        }
+
+        if (moving)
+        {
+            Vector3 agentDir = agent.path.corners[1] - transform.position;
+
+            Quaternion bodyRot = Quaternion.LookRotation(agentDir.normalized);
+            transform.rotation = Quaternion.Slerp(transform.rotation, bodyRot, rotationSpeed * Time.deltaTime);
+        }
+        else if (looking)
+        {
+            Vector3 lookDir = player.transform.position - transform.position;
+
+            Quaternion bodyRot = Quaternion.LookRotation(lookDir.normalized);
+            transform.rotation = Quaternion.Slerp(transform.rotation, bodyRot, rotationSpeed * Time.deltaTime);
         }
     }
 
@@ -141,7 +176,7 @@ public class FlyingEnemy : MonoBehaviour
         {
             attack = false;
             returning = true;
-            agent.updateRotation = false;
+            //agent.updateRotation = false;
             agent.speed = baseSpeed;
             agent.SetDestination(returnPos);
 

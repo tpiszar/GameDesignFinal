@@ -186,6 +186,7 @@ public class Spawner : MonoBehaviour
                 GameObject port = Instantiate(portal, new Vector3(0, 2, 0), Quaternion.identity);
                 port.transform.Rotate(new Vector3(-90, 0, 0));
                 Portal portScr = port.GetComponent<Portal>();
+                portScr.player = player;
                 portScr.endCam = endCam;
                 portScr.miniMap = miniMap;
                 portScr.mainUI = mainUI;
