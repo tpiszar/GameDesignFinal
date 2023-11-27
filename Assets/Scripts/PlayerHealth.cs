@@ -121,6 +121,7 @@ public class PlayerHealth : MonoBehaviour
                 {
                     GetComponentInParent<Player>().Dead();
                     Destroy(gameObject);
+                    
                     //animator.SetBool("Dead", true);
                     //mesh.parent = null;
                     //mesh.GetComponent<Movement>().enabled = false;

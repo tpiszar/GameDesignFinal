@@ -288,12 +288,13 @@ public class GroundEnemy : MonoBehaviour
                     //Instantiate(deathEff, transform.position, Quaternion.identity);
                     animator.SetBool("Dead", true);
                     Mesh.parent = null;
-                    Collider[] cols = GetComponentsInChildren<Collider>();
+                    Collider[] cols = Mesh.GetComponentsInChildren<Collider>();
                     foreach (Collider col in cols)
                     {
                         col.enabled = false;
                     }
                     Destroy(Mesh.GetComponent<Movement>());
+                    Mesh.GetComponent<DeathFade>().enabled = true;
                 }
 
                 if (Player.lifeStealBonus != 0)

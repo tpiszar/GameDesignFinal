@@ -56,8 +56,11 @@ public class SpawnEffect : MonoBehaviour {
             }
         }
 
-
-        _renderer.material.SetFloat(shaderProperty, fadeIn.Evaluate( Mathf.InverseLerp(0, spawnEffectTime, timer)));
+        foreach (Material m in _renderer.materials)
+        {
+            m.SetFloat(shaderProperty, fadeIn.Evaluate( Mathf.InverseLerp(0, spawnEffectTime, timer)));
+        }
+        //_renderer.material.
         
     }
 }

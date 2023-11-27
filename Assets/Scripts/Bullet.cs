@@ -22,6 +22,8 @@ public class Bullet : MonoBehaviour
 
     public GameObject particleHit;
 
+    public float poisonEffBalance = 1f;
+
     public enum shooter
     {
         player,
@@ -133,7 +135,7 @@ public class Bullet : MonoBehaviour
                 foreach (SpawnEffect effs in GrEn.poisonEffs)
                 {
                     effs.spawnEffectTime = GrEn.poisonTick * GrEn.maxHealth;
-                    effs.timer = effs.spawnEffectTime * (1f - (float)GrEn.health / (float)GrEn.maxHealth);
+                    effs.timer = (effs.spawnEffectTime * (1f - (float)GrEn.health / (float)GrEn.maxHealth)) - poisonEffBalance;
                 }
             }
 

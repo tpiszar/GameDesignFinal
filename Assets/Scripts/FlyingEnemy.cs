@@ -219,6 +219,8 @@ public class FlyingEnemy : MonoBehaviour
                 //animator.Play("FlyDeath2");
                 animator.SetTrigger("Dead");
                 Mesh.parent = null;
+
+                Mesh.GetComponent<DeathFade>().enabled = true;
             }
 
             if (Player.lifeStealBonus != 0)

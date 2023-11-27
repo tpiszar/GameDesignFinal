@@ -5679,6 +5679,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2783293806863858667}
   - component: {fileID: 9085879131977513311}
+  - component: {fileID: 1092223001412776044}
   m_Layer: 0
   m_Name: stalker
   m_TagString: Untagged
@@ -5721,8 +5722,8 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2c365c1851437b648b65983bb49832de, type: 2}
-  - {fileID: 2100000, guid: 0625a0356e7b05d41a7a7e4d43e448e2, type: 2}
+  - {fileID: 2100000, guid: 6d28b3a22f7320d48be98360555370ca, type: 2}
+  - {fileID: 2100000, guid: 74463da0944449440aa960e1dbb0e68f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5768,6 +5769,48 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.000003695488, y: 1.4291596, z: 0.6829293}
     m_Extent: {x: 2.655756, y: 2.5226734, z: 2.6041253}
   m_DirtyAABB: 0
+--- !u!114 &1092223001412776044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4379928319339436968}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 585901dad4c09564db67dc1e08787f0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnEffectTime: 2
+  pause: 1
+  fadeIn:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  ps: {fileID: 0}
+  timer: 0
+  oneTime: 1
+  particles: 0
 --- !u!1 &4628182019688457408
 GameObject:
   m_ObjectHideFlags: 0
@@ -16100,6 +16143,7 @@ GameObject:
   - component: {fileID: 3245398528144340073}
   - component: {fileID: 1828031109882087426}
   - component: {fileID: 5569865020161526921}
+  - component: {fileID: 749281698615756833}
   m_Layer: 6
   m_Name: Anim
   m_TagString: Untagged
@@ -16175,6 +16219,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eye: {fileID: 7680679422615940044}
+--- !u!114 &749281698615756833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7351223346423276439}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b210e83d0caa66f4192d00f25d8752ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshes:
+  - {fileID: 9085879131977513311}
+  spawnEffs:
+  - {fileID: 1092223001412776044}
+  fadeMats:
+  - {fileID: 2100000, guid: 99f2366abf60fce418c26e9b7f10f498, type: 2}
+  fadeDelay: 7
+  fadeDur: 2
 --- !u!1 &7351582560377507653
 GameObject:
   m_ObjectHideFlags: 0

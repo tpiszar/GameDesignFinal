@@ -20250,6 +20250,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 2008849760821665407, guid: 8d9f4127ede70bd4cbd494fa0fc6ab19, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 32e8fa29205bdd343945ef615c1ee931, type: 2}
     - target: {fileID: 2040023391917171667, guid: 8d9f4127ede70bd4cbd494fa0fc6ab19, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -20510,6 +20514,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 8624017695669194632, guid: 8d9f4127ede70bd4cbd494fa0fc6ab19, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c62bf3b5b6c39fe4fa98bc5771b1ea0c, type: 2}
     - target: {fileID: 8671274604029026748, guid: 8d9f4127ede70bd4cbd494fa0fc6ab19, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -20576,12 +20584,73 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6689468625120531612, guid: 8d9f4127ede70bd4cbd494fa0fc6ab19, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4656108973639621737}
+    - targetCorrespondingSourceObject: {fileID: 6689468625120531612, guid: 8d9f4127ede70bd4cbd494fa0fc6ab19, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8087183341281842998}
+    - targetCorrespondingSourceObject: {fileID: 9191947824734379898, guid: 8d9f4127ede70bd4cbd494fa0fc6ab19, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9008746192034910112}
+    - targetCorrespondingSourceObject: {fileID: 1066695137948710533, guid: 8d9f4127ede70bd4cbd494fa0fc6ab19, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4802977163619648256}
   m_SourcePrefab: {fileID: 100100000, guid: 8d9f4127ede70bd4cbd494fa0fc6ab19, type: 3}
+--- !u!137 &1107588505648724824 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2008849760821665407, guid: 8d9f4127ede70bd4cbd494fa0fc6ab19, type: 3}
+  m_PrefabInstance: {fileID: 1494684724593435943}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &1780610267547814530 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 868016381457723301, guid: 8d9f4127ede70bd4cbd494fa0fc6ab19, type: 3}
   m_PrefabInstance: {fileID: 1494684724593435943}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1906014702271042466 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1066695137948710533, guid: 8d9f4127ede70bd4cbd494fa0fc6ab19, type: 3}
+  m_PrefabInstance: {fileID: 1494684724593435943}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4802977163619648256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1906014702271042466}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 585901dad4c09564db67dc1e08787f0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnEffectTime: 2
+  pause: 1
+  fadeIn:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  ps: {fileID: 0}
+  timer: 0
+  oneTime: 1
+  particles: 0
 --- !u!1 &5218523613270258107 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6689468625120531612, guid: 8d9f4127ede70bd4cbd494fa0fc6ab19, type: 3}
@@ -20604,6 +20673,81 @@ MonoBehaviour:
   agent: {fileID: 7590030251186692055}
   difference: 0.77
   baseSpeed: 3.5
+--- !u!114 &8087183341281842998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5218523613270258107}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b210e83d0caa66f4192d00f25d8752ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshes:
+  - {fileID: 1107588505648724824}
+  - {fileID: 7138352402684684975}
+  spawnEffs:
+  - {fileID: 9008746192034910112}
+  - {fileID: 4802977163619648256}
+  fadeMats:
+  - {fileID: 2100000, guid: 91136d38c8c7a08469ac23ce27584a16, type: 2}
+  - {fileID: 2100000, guid: 3b92c39b16ec2db4e836857faf507ee1, type: 2}
+  fadeDelay: 7
+  fadeDur: 2
+--- !u!137 &7138352402684684975 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8624017695669194632, guid: 8d9f4127ede70bd4cbd494fa0fc6ab19, type: 3}
+  m_PrefabInstance: {fileID: 1494684724593435943}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7723238014661409373 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9191947824734379898, guid: 8d9f4127ede70bd4cbd494fa0fc6ab19, type: 3}
+  m_PrefabInstance: {fileID: 1494684724593435943}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &9008746192034910112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7723238014661409373}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 585901dad4c09564db67dc1e08787f0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnEffectTime: 2
+  pause: 1
+  fadeIn:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  ps: {fileID: 0}
+  timer: 0
+  oneTime: 1
+  particles: 0
 --- !u!4 &8027438341779022099 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8924198713221366836, guid: 8d9f4127ede70bd4cbd494fa0fc6ab19, type: 3}
