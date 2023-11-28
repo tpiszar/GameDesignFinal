@@ -32,6 +32,8 @@ public class Bullet : MonoBehaviour
 
     public shooter shotBy;
 
+    public GameObject particleReflect;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -184,7 +186,7 @@ public class Bullet : MonoBehaviour
             {
                 if (Player.reflectBonus != 0)
                 {
-                    float baseChance = other.transform.parent.GetComponent<Player>().reflectPerc;
+                    float baseChance = other.transform.GetComponentInParent<Player>().reflectPerc;
                     float chance = baseChance;
                     for (int i = 1; i < Player.reflectBonus; i++)
                     {
@@ -192,6 +194,8 @@ public class Bullet : MonoBehaviour
                     }
                     if (Random.value < chance)
                     {
+                        GameObject reflectEffect = Instantiate(particleReflect, transform.position - transform.up * 0.15f, Quaternion.identity);
+                        reflectEffect.transform.LookAt(transform.position);
                         GetComponent<Rigidbody>().AddForce(GetComponent<Rigidbody>().velocity * -2, ForceMode.Impulse);
                         shotBy = shooter.player;
                         return;

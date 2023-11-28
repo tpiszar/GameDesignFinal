@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Design;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 using static Bullet;
 
@@ -29,6 +30,9 @@ public class Rock : MonoBehaviour
     public ParticleSystem particleHit;
 
     public GameObject particleBreak;
+
+    public ParticleSystem particleBrek;
+    public ParticleSystem particleShattr;
 
     List<int> healths = new List<int>();
     List<int> values = new List<int>();
@@ -60,7 +64,7 @@ public class Rock : MonoBehaviour
         }
         health -= dmg;
         healthBar.value = health;
-        particleHit.Play();
+
         if (health <= 0)
         {
 
@@ -75,8 +79,10 @@ public class Rock : MonoBehaviour
             }
             if (Player.rockShatterBonus > 0 )
             {
-                GameObject shatter = Instantiate(particleShatter, transform.position, Quaternion.identity);
-                shatter.transform.Rotate(new Vector3(-90, 0, 0));
+                particleShattr.Play();
+
+                //GameObject shatter = Instantiate(particleShatter, transform.position, Quaternion.identity);
+                //shatter.transform.Rotate(new Vector3(-90, 0, 0));
 
                 int baseDmg = FindObjectOfType<Melee>().meleeDmg;
                 Collider[] cols = Physics.OverlapSphere(transform.position, shatterRange + Player.rockShatterBonus);
@@ -102,11 +108,21 @@ public class Rock : MonoBehaviour
             }
             else
             {
-                GameObject brek = Instantiate(particleBreak, transform.position, Quaternion.identity);
-                brek.transform.Rotate(new Vector3(-90, 0, 0));
+                particleBrek.Play();
+
+                //GameObject brek = Instantiate(particleBreak, transform.position, Quaternion.identity);
+                //brek.transform.Rotate(new Vector3(-90, 0, 0));
             }
-            
-            Destroy(gameObject);
+
+            Destroy(GetComponent<Collider>());
+            Destroy(GetComponent<NavMeshObstacle>());
+            transform.GetChild(0).GetComponentInChildren<MeshRenderer>().enabled = false;
+            Destroy(gameObject, 3f);
+            Destroy(this);
+        }
+        else
+        {
+            particleHit.Play();
         }
     }
 }

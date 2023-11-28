@@ -250,7 +250,9 @@ public class GroundEnemy : MonoBehaviour
 
     void Shoot()
     {
-        Vector3 dir = shootPoint.up;//target.position - shootPoint.position;
+        Vector3 dir = //shootPoint.up;
+        target.position - shootPoint.position;
+        dir.y = 0;
 
         GameObject newBullet = Instantiate(bullet, shootPoint.position, Quaternion.identity);
         newBullet.GetComponent<Bullet>().damage = damage;

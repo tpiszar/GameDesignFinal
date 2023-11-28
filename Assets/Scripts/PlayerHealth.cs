@@ -20,9 +20,11 @@ public class PlayerHealth : MonoBehaviour
     public float dmgCooldown;
     float dmgTime;
 
-    MeshRenderer mr;
-    Material mat;
-    public Material dmgMat;
+    public float loadEffectEnd;
+    public SkinnedMeshRenderer[] meshes;
+    public Material[] baseMats;
+    public Material[] dmgMats;
+    public Material[] invincMats;
     public float dmgFlashTime;
 
     public Slider healthBar;
@@ -55,6 +57,8 @@ public class PlayerHealth : MonoBehaviour
         {
             healtCanBtn.interactable = false;
         }
+
+        Invoke("BaseMats", loadEffectEnd);
     }
 
     // Update is called once per frame
@@ -70,6 +74,14 @@ public class PlayerHealth : MonoBehaviour
             }
         }
 
+    }
+
+    public void BaseMats()
+    {
+        for (int i = 0; i < meshes.Length; i++)
+        {
+            meshes[i].material = baseMats[i];
+        }
     }
 
     public void TakeDamage(int dmg)
@@ -187,8 +199,28 @@ public class PlayerHealth : MonoBehaviour
 
     IEnumerator dmgFlash()
     {
+        if (Player.invincBonus > 0)
+        {
+            for (int i = 0; i < meshes.Length; i++)
+            {
+                meshes[i].material = invincMats[i];
+            }
+        }
+        else
+        {
+            for (int i = 0; i < meshes.Length; i++)
+            {
+                meshes[i].material = dmgMats[i];
+            }
+        }
+
         //mr.material = dmgMat;
         yield return new WaitForSeconds(dmgCooldown);// dmgFlashTime);
-        //mr.material = mat;
+                                                     //mr.material = mat;
+
+        for (int i = 0; i < meshes.Length; i++)
+        {
+            meshes[i].material = baseMats[i];
+        }
     }
 }

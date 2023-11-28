@@ -10,7 +10,7 @@ public class Tutorial : MonoBehaviour
     public TextMeshProUGUI directTxt2;
     public TextMeshProUGUI timerTxt;
 
-    int stage = 0;
+    public int stage = 0;
 
     public GameObject wall;
 
@@ -84,7 +84,7 @@ public class Tutorial : MonoBehaviour
             {
                 instructions[0].SetActive(true);
                 timerTxt.enabled = false;
-                timerTxt.text = "Continue Forward.";
+                timerTxt.text = "Break Through.";
                 Time.timeScale = 0f;
                 stage++;
             }
@@ -142,6 +142,7 @@ public class Tutorial : MonoBehaviour
                 portScr.miniMap = miniMap;
                 portScr.mainUI = mainUI;
                 portScr.victUI = victUI;
+                portScr.player = health.transform;
                 stage++;
             }
         }

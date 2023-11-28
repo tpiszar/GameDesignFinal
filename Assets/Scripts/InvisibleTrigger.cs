@@ -5,6 +5,7 @@ using UnityEngine;
 public class InvisibleTrigger : MonoBehaviour
 {
     public Tutorial tut;
+    public int stage;
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +21,12 @@ public class InvisibleTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.GetComponent<PlayerHealth>())
+        if (tut.stage != stage)
+        {
+            return;
+        }
+
+        if (other.gameObject.GetComponentInParent<PlayerHealth>())
         {
 
             tut.wallTrigger();

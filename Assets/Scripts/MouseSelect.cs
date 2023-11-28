@@ -25,8 +25,6 @@ public class MouseSelect : MonoBehaviour
 
     float distance;
 
-    public Transform temp;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -99,8 +97,6 @@ public class MouseSelect : MonoBehaviour
             if (Physics.Raycast(ray, out hit, 100, rayMaskAttack))
             {
                 //agent.enabled = false;
-
-                temp.transform.position = hit.point;
 
                 agent.updateRotation = false;
                 lookDir = hit.point - player.position;
