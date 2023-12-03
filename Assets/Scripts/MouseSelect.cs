@@ -25,12 +25,14 @@ public class MouseSelect : MonoBehaviour
 
     float distance;
 
+    public float lineWidth = 0.1f;
+
     // Start is called before the first frame update
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
-        lineRenderer.startWidth = 0.15f;
-        lineRenderer.endWidth = 0.15f;
+        lineRenderer.startWidth = lineWidth;
+        lineRenderer.endWidth = lineWidth;
         lineRenderer.positionCount = 0;
 
         distance = player.transform.localScale.x + 0.05f;

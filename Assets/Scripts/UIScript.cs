@@ -61,5 +61,8 @@ public class UIScript : MonoBehaviour
         Player.rockStealBonus = 0;
         Player.rockShatterBonus = 0;
         Player.invincBonus = 0;
+
+        PlayerHealth.healthCanCount = 3;
+        DynamiteDropper.dynamiteCount = 3;
     }
 }

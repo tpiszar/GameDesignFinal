@@ -39,6 +39,6 @@ Material:
     m_Floats:
     - _Cull: 2
     m_Colors:
-    - _Color: {r: 0, g: 5.578189, b: 118.035385, a: 1}
+    - _Color: {r: 0, g: 14.64823, b: 29.508846, a: 1}
     - _MovementDirection: {r: 0, g: -0.1, b: 0, a: 1}
   m_BuildTextureStacks: []

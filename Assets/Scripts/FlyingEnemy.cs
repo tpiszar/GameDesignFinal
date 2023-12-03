@@ -187,7 +187,7 @@ public class FlyingEnemy : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.layer == 3)
+        if (collision.gameObject.layer == 3 && !knocked)
         {
             attack = false;
             returning = true;
