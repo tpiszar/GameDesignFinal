@@ -144,8 +144,8 @@ MonoBehaviour:
   canvas: {fileID: 660003758873807229}
   healthMin: 40
   healthMax: 90
-  resourceMin: 1
-  resourceMax: 3
+  resourceMin: 2
+  resourceMax: 4
   maxHealth: 0
   rockStealPerc: 0
   shatterPerc: 1

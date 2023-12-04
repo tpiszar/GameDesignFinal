@@ -25,6 +25,12 @@ public class GenerateLevel : MonoBehaviour
     public MeshRenderer[] ground;
     public Material[] groundMats;
 
+    public MeshRenderer[] outer;
+    public Material[] outerMats;
+
+    public MeshRenderer[] smalls;
+    public Material[] smallMats;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,10 +52,24 @@ public class GenerateLevel : MonoBehaviour
 
         player.transform.position = finalPosition;
 
-        Material mat = groundMats[Random.Range(0, groundMats.Length)];
+        int randMat = Random.Range(0, groundMats.Length);
+
+        Material mat = groundMats[randMat];
         for (int i = 0; i < ground.Length; i++)
         {
             ground[i].material = mat;
+        }
+
+        Material outerMat = outerMats[randMat];
+        for (int i = 0; i < ground.Length; i++)
+        {
+            outer[i].material = outerMat;
+        }
+
+        Material smallMat = smallMats[randMat];
+        for (int i = 0; i < smalls.Length; i++)
+        {
+            smalls[i].material = smallMat;
         }
     }
 

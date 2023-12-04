@@ -14,6 +14,8 @@ public class Movement : MonoBehaviour
 
     public float baseSpeed;
 
+    public bool fixRotation = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +34,11 @@ public class Movement : MonoBehaviour
         Vector3 pos = player.position;
         pos.y -= difference;
         transform.position = pos;
+        
+        if (fixRotation)
+        {
+            transform.eulerAngles = transform.parent.eulerAngles;
+        }
 
         float x = 0;
         float y = 0;
