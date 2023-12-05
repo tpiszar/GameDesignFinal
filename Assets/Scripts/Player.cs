@@ -13,12 +13,12 @@ using System;
 public class Player : MonoBehaviour
 {
     public static int ResourceCount = 0;
-    public static int Level = 0;
+    public static int Level = 4;
     public TextMeshProUGUI resourceTxt;
     public GameObject deathScreen;
     public GameObject mainUI;
 
-    public static int speedBonus = 0;
+    public static int speedBonus = 1;
     public static int healthBonus = 0;
     public static int meleeDmgBonus = 0;
     public static int bulletDmgBonus = 0;
@@ -33,12 +33,12 @@ public class Player : MonoBehaviour
     public static int antiGravBonus = 0;
     public static int lifeSupportBonus = 0;
     public static int richMatsBonus = 0;
-    public static int armorPierceBonus = 0;
+    public static int armorPierceBonus = 1;
     public static int gasLeakBonus = 0;
     public static int reflectBonus = 0;
     public static int resourceSpdBonus = 0;
     public static int rockStealBonus = 0;
-    public static int rockShatterBonus = 0;
+    public static int rockShatterBonus = 1;
     public static int invincBonus = 0;
 
     public float spdPerc;

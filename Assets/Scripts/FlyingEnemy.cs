@@ -189,11 +189,14 @@ public class FlyingEnemy : MonoBehaviour
     {
         if (collision.gameObject.layer == 3 && !knocked)
         {
-            attack = false;
-            returning = true;
-            //agent.updateRotation = false;
-            agent.speed = baseSpeed;
-            agent.SetDestination(returnPos);
+            if (attack)
+            {
+                attack = false;
+                returning = true;
+                //agent.updateRotation = false;
+                agent.speed = baseSpeed;
+                agent.SetDestination(returnPos);
+            }
 
             player.GetComponentInParent<PlayerHealth>().TakeDamage(attkDmg);
         }

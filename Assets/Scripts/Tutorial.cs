@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,6 +27,10 @@ public class Tutorial : MonoBehaviour
     public GameObject[] enemies;
 
     public PlayerHealth health;
+    public Melee melee;
+    public Shoot gun;
+    public MouseSelect sel;
+    bool weapon = true;
 
     public GameObject[] instructions;
 
@@ -69,6 +74,7 @@ public class Tutorial : MonoBehaviour
         {
             //Health canister
             instructions[3].SetActive(true);
+            disableWep();
             timerTxt.enabled = false;
             Time.timeScale = 0f;
             canCount.text = "3";
@@ -83,6 +89,7 @@ public class Tutorial : MonoBehaviour
             if (startTime > 3)
             {
                 instructions[0].SetActive(true);
+                disableWep();
                 timerTxt.enabled = false;
                 timerTxt.text = "Break Through.";
                 Time.timeScale = 0f;
@@ -103,6 +110,7 @@ public class Tutorial : MonoBehaviour
             {
                 dynDone = true;
                 instructions[4].SetActive(true);
+                disableWep();
                 timerTxt.enabled = false;
                 Time.timeScale = 0f;
                 dynCount.text = "3";
@@ -114,6 +122,7 @@ public class Tutorial : MonoBehaviour
             {
                 stage++;
                 instructions[5].SetActive(true);
+                disableWep();
                 timerTxt.enabled = false;
                 Time.timeScale = 0f;
             }
@@ -224,6 +233,7 @@ public class Tutorial : MonoBehaviour
         {
             //Materials
             instructions[1].SetActive(true);
+            disableWep();
             timerTxt.enabled = false;
             Time.timeScale = 0f;
             timerTxt.text = "Mine Through the Materials to Continue.";
@@ -233,6 +243,7 @@ public class Tutorial : MonoBehaviour
         {
             //Weapons
             instructions[2].SetActive(true);
+            disableWep();
             timerTxt.enabled = false;
             Time.timeScale = 0f;
             timerTxt.text = "Melee the Close Enemy and Shoot the Far One.";
@@ -265,5 +276,23 @@ public class Tutorial : MonoBehaviour
         instructions[instr].SetActive(false);
         timerTxt.enabled = true;
         Time.timeScale = 1f;
+
+        if (weapon)
+        {
+            melee.enabled = true;
+        }
+        else
+        {
+            gun.enabled = true;
+        }
+        sel.enabled = true;
+    }
+
+    public void disableWep()
+    {
+        weapon = melee.enabled;
+        melee.enabled = false;
+        gun.enabled = false;
+        sel.enabled = false;
     }
 }
